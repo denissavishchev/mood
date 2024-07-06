@@ -18,6 +18,8 @@ dependencies:
   easy_localization: ^3.0.7
   country_flags: ^3.0.0
   flutter_animation_progress_bar: ^2.3.1
+  sqflite: ^2.3.3+1
+  path: ^1.9.0
 
 dev_dependencies:
   flutter_test:
