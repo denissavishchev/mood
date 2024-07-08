@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:mood/providers/mood_provider.dart';
 import 'package:provider/provider.dart';
@@ -73,13 +75,18 @@ class AddMoodScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 40,),
-                TextField(
-                  controller: data.photoTextController,
-                  decoration: InputDecoration(
-                      hintText: 'photo',
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12)
-                      )
+                GestureDetector(
+                  onTap: () => data.pickAnImage(),
+                  child: Container(
+                    width: 100,
+                    clipBehavior: Clip.hardEdge,
+                    decoration: BoxDecoration(
+                      color: Colors.blue.withOpacity(0.3),
+                      borderRadius: const BorderRadius.all(Radius.circular(4)),
+                    ),
+                    child: data.fileName == ''
+                        ? const Icon(Icons.camera_alt)
+                        : Image.file(File(data.file!.path), fit: BoxFit.cover,),
                   ),
                 ),
                 const SizedBox(height: 40,),

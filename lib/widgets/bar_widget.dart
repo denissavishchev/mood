@@ -17,8 +17,8 @@ class BarWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
     return Container(
-      width: size.width * 0.1,
-      height: size.height * 0.38,
+      width: size.width * 0.008,
+      height: size.height * 0.4,
       // color: kGrey,
       decoration: BoxDecoration(
           borderRadius: topRadius
@@ -27,8 +27,8 @@ class BarWidget extends StatelessWidget {
           boxShadow: [
             BoxShadow(
               color: color,
-              blurRadius: 2,
-              spreadRadius: 2,
+              blurRadius: 0.5,
+              spreadRadius: 0.5,
               // offset: Offset(2, 2)
             )
           ]
@@ -44,7 +44,7 @@ class BarWidget extends StatelessWidget {
         animatedDuration: const Duration(milliseconds: 300),
         direction: Axis.vertical,
         verticalDirection: topRadius ? VerticalDirection.up : VerticalDirection.down,
-        displayText: '%',
+        // displayText: '%',
         formatValueFixed: 0,
         borderRadius: topRadius
             ? const BorderRadius.vertical(top: Radius.circular(12))
