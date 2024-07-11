@@ -24,14 +24,7 @@ class BarWidget extends StatelessWidget {
           borderRadius: topRadius
               ? const BorderRadius.vertical(top: Radius.circular(12))
               : const BorderRadius.vertical(bottom: Radius.circular(12)),
-          boxShadow: [
-            BoxShadow(
-              color: color,
-              blurRadius: 0.5,
-              spreadRadius: 0.5,
-              // offset: Offset(2, 2)
-            )
-          ]
+        border: Border.all(width: 1, color: color.withOpacity(0.1))
       ),
       child: FAProgressBar(
         currentValue: value,
