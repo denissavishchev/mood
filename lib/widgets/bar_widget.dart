@@ -17,14 +17,14 @@ class BarWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
     return Container(
-      width: size.width * 0.008,
+      width: size.width * 0.01,
       height: size.height * 0.4,
       // color: kGrey,
       decoration: BoxDecoration(
           borderRadius: topRadius
               ? const BorderRadius.vertical(top: Radius.circular(12))
               : const BorderRadius.vertical(bottom: Radius.circular(12)),
-        border: Border.all(width: 1, color: color.withOpacity(0.1))
+        border: Border.all(width: 1, color: color)
       ),
       child: FAProgressBar(
         currentValue: value,
