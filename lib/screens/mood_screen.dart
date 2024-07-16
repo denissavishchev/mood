@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mood/constants.dart';
+import 'package:mood/models/mood_model.dart';
 import 'package:mood/screens/add_mood_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
+import '../models/database_helper.dart';
 import '../providers/mood_provider.dart';
 import '../widgets/mood_list_widget.dart';
 import '../widgets/navigation_button_widget.dart';
@@ -15,81 +18,91 @@ class MoodScreen extends StatelessWidget {
     return Consumer<MoodProvider>(
         builder: (context, data, _){
           return Scaffold(
-            body: SafeArea(
-              child: Container(
-                width: size.width,
-                height: size.height,
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage('assets/images/bg.png'),
-                    fit: BoxFit.cover
-                  )
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(12),
-                  child: Column(
+            body: Container(
+              width: size.width,
+              height: size.height,
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    kPinkGrey,
+                    kBlueGrey
+                  ],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter
+                )
+              ),
+              child: Column(
+                children: [
+                  const SizedBox(height: 40,),
+                  SizedBox(
+                    height: size.height * 0.07,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text('Mood', style: kBigOrangeTextStyle,),
+                        const NavigationButtonWidget(icon: Icons.access_alarm,),
+                        const NavigationButtonWidget(icon: Icons.account_circle_outlined,),
+                        const NavigationButtonWidget(icon: Icons.account_balance_outlined,),
+                      ],
+                    ),
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SizedBox(
-                        height: size.height * 0.07,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Text('Mood', style: kBigTextStyle,),
-                            const NavigationButtonWidget(icon: Icons.access_alarm,),
-                            const NavigationButtonWidget(icon: Icons.account_circle_outlined,),
-                            const NavigationButtonWidget(icon: Icons.account_balance_outlined,),
-                          ],
-                        ),
-                      ),
-                      const Spacer(),
-                      Row(
-                        children: [
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const MoodsListWidget(color: kOrange,),
-                              SizedBox(
-                                height: 60,
-                                width:  size.width * 0.9,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Container(
-                                      width: 150,
-                                      height: 50,
+                      const MoodsListWidget(color: kOrange,),
+                      FutureBuilder(
+                          future: MoodDatabaseHelper.getData(),
+                          builder: (context, snapshot){
+                            if(snapshot.connectionState == ConnectionState.waiting){
+                              return const Center(child: CircularProgressIndicator());
+                            }
+                            return Container(
+                              width: 200,
+                              height: 200,
+                              color: kWhite,
+                              child: SfCircularChart(
+                                  annotations: <CircularChartAnnotation>[
+                                    CircularChartAnnotation(
+                                        widget: GestureDetector(
+                                         onTap: () => Navigator.pushReplacement(context,
+                                            MaterialPageRoute(builder: (context) =>
+                                            const AddMoodScreen())),
+                                    child: Container(
+                                      width: 40,
+                                      height: 40,
                                       decoration: BoxDecoration(
-                                          color: kWhite.withOpacity(0.5),
-                                          borderRadius: const BorderRadius.all(Radius.circular(12),),
-                                          border: Border.all(color: kOrange, width: 1.5),
+                                        color: kWhite,
+                                        borderRadius: const BorderRadius.all(Radius.circular(25),),
+                                        border: Border.all(color: kOrange, width: 1.5),
                                       ),
-                                      child: Center(child: Text('Today', style: kBigTextStyle,)),
+                                      child: const Center(child: Icon(Icons.add)),
                                     ),
-                                    GestureDetector(
-                                      onTap: () => Navigator.pushReplacement(context,
-                                          MaterialPageRoute(builder: (context) =>
-                                          const AddMoodScreen())),
-                                      child: Container(
-                                        width: 200,
-                                        height: 50,
-                                        decoration: BoxDecoration(
-                                          color: kWhite.withOpacity(0.5),
-                                          borderRadius: const BorderRadius.all(Radius.circular(12),),
-                                          border: Border.all(color: kOrange, width: 1.5),
-                                        ),
-                                        child: Center(child: Text('Add mood', style: kBigTextStyle,)),
-                                      ),
-                                    ),
+                                  ),),
                                   ],
-                                ),
+                                margin: EdgeInsets.zero,
+                                  series: <CircularSeries>[
+                                    DoughnutSeries<MoodModel, int>(
+                                      animationDuration: 600,
+                                        dataSource: snapshot.data!,
+                                        pointColorMapper:(mood,  _) => mood.mood == 'good' ? kOrange : kBlue,
+                                        xValueMapper: (mood, _) => 1,
+                                        yValueMapper: (mood, _) => 1,
+                                        pointRadiusMapper: (mood, _) => data.doughnut(mood.rating),
+                                        explode: true,
+                                        explodeAll: true,
+                                        explodeOffset: '1',
+                                        radius: '40%',
+                                        innerRadius: '30%',
+                                        // strokeColor: kBlueGrey
+                                    )
+                                  ]
                               ),
-                              const MoodsListWidget(color: kBlue,),
-                            ],
-                          ),
-                        ],
-                      ),
+                            );
+                          }
+                      )
                     ],
                   ),
-                ),
+                ],
               ),
             ),
           );
@@ -97,6 +110,8 @@ class MoodScreen extends StatelessWidget {
     );
   }
 }
+
+
 
 
 

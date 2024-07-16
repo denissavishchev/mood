@@ -1,11 +1,12 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:mood/models/mood_model.dart';
 import 'package:mood/screens/mood_screen.dart';
 import '../models/database_helper.dart';
 import 'package:image_picker/image_picker.dart';
+
+
 
 class MoodProvider with ChangeNotifier {
 
@@ -19,6 +20,22 @@ class MoodProvider with ChangeNotifier {
   late XFile? file;
   String fileName = '';
   String base64String = '';
+
+  String doughnut(String rating){
+    switch (rating) {
+      case '1':
+        return '30%';
+      case '2':
+        return '50%';
+      case '3':
+        return '70%';
+      case '4':
+        return '85%';
+      case '5':
+        return '100%';
+    }
+    return '30%';
+  }
 
   Future pickAnImage()async{
     ImagePicker image = ImagePicker();

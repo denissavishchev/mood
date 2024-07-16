@@ -8,6 +8,7 @@ class NavigationButtonWidget extends StatelessWidget {
   });
 
   final IconData icon;
+  // final String side;
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +16,7 @@ class NavigationButtonWidget extends StatelessWidget {
       width: 44,
       height: 44,
       decoration: BoxDecoration(
-          borderRadius: const BorderRadius.all(Radius.circular(30)),
+          borderRadius: const BorderRadius.all(Radius.circular(12)),
           border: Border.all(color: kOrange, width: 1.5),
           boxShadow: [
             BoxShadow(
