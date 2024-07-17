@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-const kOrange = Color(0xffec4611);
-const kBlue = Color(0xff0033c3);
-const kBlueGrey = Color(0xff689ed0);
-const kPinkGrey = Color(0xfff2dfe5);
+const kOrange = Color(0xfffc210d);
+const kNavy = Color(0xff7dd5da);
+const kBlue = Color(0xff4d89c7);
+const kRed = Color(0xffff7582);
+const kGrey = Color(0xffdcdcdc);
+const kYellow = Color(0xfff7ce38);
 const kBlack = Color(0xff010f19);
 const kWhite = Color(0xfffefffd);
 
