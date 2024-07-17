@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:mood/constants.dart';
-import 'package:mood/models/mood_model.dart';
 import 'package:mood/screens/add_mood_screen.dart';
 import 'package:provider/provider.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 import '../models/database_helper.dart';
 import '../providers/mood_provider.dart';
 import '../widgets/mood_list_widget.dart';
 import '../widgets/navigation_button_widget.dart';
+import 'package:fl_chart/fl_chart.dart';
 
 class MoodScreen extends StatelessWidget {
   const MoodScreen({super.key});
@@ -48,63 +47,71 @@ class MoodScreen extends StatelessWidget {
                               if(snapshot.connectionState == ConnectionState.waiting){
                                 return const Center(child: CircularProgressIndicator());
                               }
-                              return Container(
-                                width: 200,
-                                height: 200,
-                                padding: const EdgeInsets.all(2),
-                                decoration: const BoxDecoration(
-                                  borderRadius: BorderRadius.all(Radius.circular(100)),
-                                  color: kGrey,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      blurRadius: 2,
-                                      spreadRadius: 2,
-                                      color: kWhite
-                                    )
-                                  ]
-                                ),
-                                child: SfCircularChart(
-                                    annotations: <CircularChartAnnotation>[
-                                      CircularChartAnnotation(
-                                          widget: GestureDetector(
-                                           onTap: () => Navigator.pushReplacement(context,
-                                              MaterialPageRoute(builder: (context) =>
-                                              const AddMoodScreen())),
-                                      child: Container(
-                                        width: 40,
-                                        height: 40,
+                              final moods = snapshot.data!;
+                              return GestureDetector(
+                                onTap: () => Navigator.pushReplacement(context,
+                                    MaterialPageRoute(builder: (context) =>
+                                    const AddMoodScreen())),
+                                child: Container(
+                                  width: 200,
+                                  height: 200,
+                                  padding: const EdgeInsets.all(2),
+                                  decoration: const BoxDecoration(
+                                      borderRadius: BorderRadius.all(Radius.circular(100)),
+                                      color: kGrey,
+                                      boxShadow: [
+                                        BoxShadow(
+                                            blurRadius: 2,
+                                            spreadRadius: 2,
+                                            color: kWhite
+                                        )
+                                      ]
+                                  ),
+                                  child: Stack(
+                                    alignment: Alignment.center,
+                                    children: [
+                                      PieChart(
+                                        PieChartData(
+                                          startDegreeOffset: -90,
+                                          sections: List.generate(moods.length, ((i){
+                                            return PieChartSectionData(
+                                              color: snapshot.data![i].mood == 'good'
+                                                  ? kOrange : kBlue,
+                                              gradient: LinearGradient(
+                                                colors: [
+                                                  moods[i].mood == 'good'
+                                                      ? kYellow.withOpacity(0.7)
+                                                      : kNavy.withOpacity(0.7),
+                                                  moods[i].mood == 'good'
+                                                      ? kOrange.withOpacity(0.7)
+                                                      : kBlue.withOpacity(0.7)
+                                                ],
+                                                begin: Alignment.bottomLeft,
+                                                end: Alignment.topRight
+                                              ),
+                                              // value: double.parse(snapshot.data![i].rating),
+                                              radius: double.parse(snapshot.data![i].rating) * 15
+                                            );
+                                          }))
+                                        )
+                                      ),
+                                      Container(
+                                        width: 44,
+                                        height: 44,
                                         decoration: BoxDecoration(
                                           color: kGrey,
                                           borderRadius: const BorderRadius.all(Radius.circular(25),),
-                                          border: Border.all(color: kOrange, width: 1.5),
+                                          border: Border.all(color: kOrange.withOpacity(0.7), width: 1.5),
                                         ),
                                         child: const Center(child: Icon(Icons.add)),
-                                      ),
-                                    ),),
-                                    ],
-                                  margin: EdgeInsets.zero,
-                                    series: <CircularSeries>[
-                                      DoughnutSeries<MoodModel, int>(
-                                        animationDuration: 600,
-                                          dataSource: snapshot.data!,
-                                          pointColorMapper:(mood,  _) => mood.mood == 'good'
-                                              ? kOrange : kBlue,
-                                          xValueMapper: (mood, _) => 1,
-                                          yValueMapper: (mood, _) => 1,
-                                          pointRadiusMapper: (mood, _) => data.doughnut(mood.rating),
-                                          explode: true,
-                                          explodeAll: true,
-                                          explodeOffset: '1',
-                                          radius: '40%',
-                                          innerRadius: '30%',
-                                          // strokeColor: kBlueGrey
                                       )
-                                    ]
+                                    ],
+                                  ),
                                 ),
                               );
                             }
                         ),
-                        const SizedBox(width: 12,)
+                        const SizedBox(width: 12,),
                       ],
                     )
                   ],
