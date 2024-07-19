@@ -10,16 +10,34 @@ import 'package:image_picker/image_picker.dart';
 
 class MoodProvider with ChangeNotifier {
 
-  final moodTextController = TextEditingController();
   final actionTextController = TextEditingController();
   final personTextController = TextEditingController();
   final placeTextController = TextEditingController();
-  final ratingTextController = TextEditingController();
   final descriptionTextController = TextEditingController();
 
   late XFile? file;
   String fileName = '';
   String base64String = '';
+
+  bool moodState = true;
+  double stars = 0.0;
+
+  void toMoodScreen(context){
+    cleanData();
+    Navigator.pushReplacement(context,
+        MaterialPageRoute(builder: (context) =>
+        const MoodScreen()));
+  }
+
+  void updateRating(double rating){
+    stars = rating;
+    notifyListeners();
+  }
+
+  void switchMood(){
+    moodState = !moodState;
+    notifyListeners();
+  }
 
   String doughnut(String rating){
     switch (rating) {
@@ -49,16 +67,17 @@ class MoodProvider with ChangeNotifier {
 
   insertMood(context) async{
     final mood = MoodModel(
-        mood: moodTextController.text,
+        mood: moodState.toString(),
         action: actionTextController.text,
         person: personTextController.text,
         place: placeTextController.text,
-        rating: ratingTextController.text,
+        rating: stars.toString(),
         description: descriptionTextController.text,
         photo: base64String,
         time: DateTime.now()
     );
     await MoodDatabaseHelper.insertMood(mood: mood);
+    cleanData();
     Navigator.pushReplacement(context,
         MaterialPageRoute(builder: (context) =>
         const MoodScreen()));
@@ -67,6 +86,17 @@ class MoodProvider with ChangeNotifier {
   void deleteMood(int docId) async{
     await MoodDatabaseHelper.deleteMood(docId);
     notifyListeners();
+  }
+
+  void cleanData(){
+    actionTextController.clear();
+    personTextController.clear();
+    placeTextController.clear();
+    descriptionTextController.clear();
+    moodState = true;
+    stars = 0.0;
+    fileName = '';
+    base64String = '';
   }
 
 

@@ -75,14 +75,14 @@ class MoodScreen extends StatelessWidget {
                                           startDegreeOffset: -90,
                                           sections: List.generate(moods.length, ((i){
                                             return PieChartSectionData(
-                                              color: snapshot.data![i].mood == 'good'
+                                              color: snapshot.data![i].mood == 'true'
                                                   ? kOrange : kBlue,
                                               gradient: LinearGradient(
                                                 colors: [
-                                                  moods[i].mood == 'good'
+                                                  moods[i].mood == 'true'
                                                       ? kYellow.withOpacity(0.7)
                                                       : kNavy.withOpacity(0.7),
-                                                  moods[i].mood == 'good'
+                                                  moods[i].mood == 'true'
                                                       ? kOrange.withOpacity(0.7)
                                                       : kBlue.withOpacity(0.7)
                                                 ],

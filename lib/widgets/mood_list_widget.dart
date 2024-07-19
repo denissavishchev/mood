@@ -52,10 +52,10 @@ class MoodsListWidget extends StatelessWidget {
                           decoration: BoxDecoration(
                             gradient: LinearGradient(
                                 colors: [
-                                  moods[index].mood == 'good'
+                                  moods[index].mood == 'true'
                                       ? kYellow.withOpacity(0.7)
                                       : kNavy.withOpacity(0.7),
-                                  moods[index].mood == 'good'
+                                  moods[index].mood == 'true'
                                       ? kOrange.withOpacity(0.7)
                                       : kBlue.withOpacity(0.7)
                                 ],
@@ -83,7 +83,7 @@ class MoodsListWidget extends StatelessWidget {
                                       BoxShadow(
                                         spreadRadius: 2,
                                         blurRadius: 1,
-                                        color: moods[index].mood == 'good'
+                                        color: moods[index].mood == 'true'
                                           ? kOrange.withOpacity(0.3) : kBlue.withOpacity(0.3)
                                       )
                                     ],
