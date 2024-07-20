@@ -4,7 +4,6 @@ import 'package:mood/constants.dart';
 import 'package:mood/providers/mood_provider.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
-
 import '../widgets/mood_switch_widget.dart';
 
 class AddMoodScreen extends StatelessWidget {
@@ -44,31 +43,39 @@ class AddMoodScreen extends StatelessWidget {
                           children: [
                             IconButton(
                                 onPressed: () => data.toMoodScreen(context),
-                                icon: const Icon(Icons.arrow_back_ios_new)
+                                icon: const Icon(Icons.arrow_back_ios_new, color: kWhite,)
                             )
                           ],
                         ),
                         const SizedBox(height: 12,),
                         const MoodSwitchWidget(),
                         const SizedBox(height: 40,),
-                        TextField(
+                        TextFormField(
                           controller: data.actionTextController,
-                          decoration: textFieldDecoration.copyWith(hintText: 'action'),
+                          cursorColor: kWhite,
+                          decoration: textFieldDecoration.copyWith(
+                              label: const Text('action', style: TextStyle(color: kWhite),)),
                         ),
                         const SizedBox(height: 20,),
                         TextField(
                           controller: data.personTextController,
-                          decoration: textFieldDecoration.copyWith(hintText: 'person'),
+                          cursorColor: kWhite,
+                          decoration: textFieldDecoration.copyWith(
+                              label: const Text('person', style: TextStyle(color: kWhite),)),
                         ),
                         const SizedBox(height: 20,),
                         TextField(
                           controller: data.placeTextController,
-                            decoration: textFieldDecoration.copyWith(hintText: 'place'),
+                            cursorColor: kWhite,
+                            decoration: textFieldDecoration.copyWith(
+                                label: const Text('place', style: TextStyle(color: kWhite),))
                         ),
                         const SizedBox(height: 20,),
                         TextField(
                           controller: data.descriptionTextController,
-                          decoration: textFieldDecoration.copyWith(hintText: 'description'),
+                          cursorColor: kWhite,
+                          decoration: textFieldDecoration.copyWith(
+                              label: const Text('description', style: TextStyle(color: kWhite),)),
                         ),
                         const SizedBox(height: 20,),
                         RatingBar(
@@ -77,21 +84,25 @@ class AddMoodScreen extends StatelessWidget {
                           itemCount: 5,
                           itemSize: 60,
                           ratingWidget: RatingWidget(
-                            full: const Icon(Icons.star,
-                                color: kGrey,
-                                shadows: [
+                            full: Icon(Icons.star,
+                                color: data.moodState
+                                    ? kBlue.withOpacity(0.3)
+                                    : kOrange.withOpacity(0.3),
+                                shadows: const [
                                   BoxShadow(
-                                      color: kBlue,
+                                      color: kWhite,
                                       blurRadius: 9,
                                       spreadRadius: 6,
                                       offset: Offset(0.5, 0.5)
                                   )
                                 ]),
-                            empty: const Icon(Icons.star_border,
-                                color: kGrey,
-                                shadows: [
+                            empty: Icon(Icons.star_border,
+                                color: data.moodState
+                                    ? kBlue.withOpacity(0.3)
+                                    : kOrange.withOpacity(0.3),
+                                shadows: const [
                                   BoxShadow(
-                                      color: kBlue,
+                                      color: kWhite,
                                       blurRadius: 9,
                                       spreadRadius: 6,
                                       offset: Offset(0.5, 0.5)
@@ -107,12 +118,15 @@ class AddMoodScreen extends StatelessWidget {
                           child: Container(
                             width: 100,
                             clipBehavior: Clip.hardEdge,
+                            padding: const EdgeInsets.all(4),
                             decoration: BoxDecoration(
-                              color: Colors.blue.withOpacity(0.3),
+                              color: data.moodState
+                                  ? kOrange.withOpacity(0.3)
+                                  : kBlue.withOpacity(0.3),
                               borderRadius: const BorderRadius.all(Radius.circular(4)),
                             ),
                             child: data.fileName == ''
-                                ? const Icon(Icons.camera_alt)
+                                ? const Icon(Icons.camera_alt, color: kGrey,)
                                 : Image.file(File(data.file!.path), fit: BoxFit.cover,),
                           ),
                         ),

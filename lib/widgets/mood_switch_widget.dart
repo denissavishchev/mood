@@ -18,9 +18,9 @@ class MoodSwitchWidget extends StatelessWidget {
               width: 200,
               height: 50,
               padding: const EdgeInsets.all(4),
-              decoration: const BoxDecoration(
-                  color: kWhite,
-                  borderRadius: BorderRadius.all(Radius.circular(12))
+              decoration: BoxDecoration(
+                  color: kGrey.withOpacity(0.4),
+                  borderRadius: const BorderRadius.all(Radius.circular(12))
               ),
               child: Stack(
                 children: [
@@ -38,8 +38,10 @@ class MoodSwitchWidget extends StatelessWidget {
                     child: Container(
                       width: 100,
                       height: 44,
-                      decoration: const BoxDecoration(
-                          color: kOrange,
+                      decoration: BoxDecoration(
+                          color: data.moodState
+                              ? kOrange.withOpacity(0.3)
+                              : kBlue.withOpacity(0.3),
                           borderRadius: BorderRadius.all(Radius.circular(12))
                       ),
                       child: Center(

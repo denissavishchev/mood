@@ -34,10 +34,10 @@ final kBigOrangeTextStyle = TextStyle(
 final textFieldDecoration = InputDecoration(
   hintStyle: kTextStyle,
   enabledBorder: const OutlineInputBorder(
-      borderSide: BorderSide(color: kOrange)
+      borderSide: BorderSide(color: kWhite)
   ),
   focusedBorder: const OutlineInputBorder(
-      borderSide: BorderSide(color: kOrange)
+      borderSide: BorderSide(color: kWhite)
   ),
   focusedErrorBorder: const OutlineInputBorder(
       borderSide: BorderSide(color: kRed)

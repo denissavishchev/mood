@@ -25,7 +25,7 @@ class MoodsListWidget extends StatelessWidget {
             width: size.width,
             clipBehavior: Clip.hardEdge,
             decoration: const BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(35))
+              borderRadius: BorderRadius.all(Radius.circular(4))
             ),
             child: FutureBuilder(
               future: MoodDatabaseHelper.getData(),
@@ -60,7 +60,7 @@ class MoodsListWidget extends StatelessWidget {
                                       : kBlue.withOpacity(0.7)
                                 ],
                             ),
-                            borderRadius: const BorderRadius.all(Radius.circular(30)),
+                            borderRadius: const BorderRadius.all(Radius.circular(4)),
                             boxShadow: const [
                               BoxShadow(
                                 color: kWhite,
