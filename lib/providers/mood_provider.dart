@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:mood/models/mood_model.dart';
 import 'package:mood/screens/mood_screen.dart';
+import '../constants.dart';
 import '../models/database_helper.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -101,5 +102,68 @@ class MoodProvider with ChangeNotifier {
     base64String = '';
   }
 
+  Future<void>showDescription(context, List<MoodModel> moods, int index) async{
+    Size size = MediaQuery.sizeOf(context);
+    return showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        backgroundColor: Colors.transparent,
+        builder: (context) {
+          return Container(
+              height: size.height * 0.5,
+              width: size.width,
+              padding: const EdgeInsets.symmetric(vertical: 12),
+              decoration: const BoxDecoration(
+                color: kGrey,
+                borderRadius: BorderRadius.all(Radius.circular(8)),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      const Spacer(),
+                      IconButton(
+                        onPressed: () => Navigator.of(context).pop(),
+                        icon: const Icon(Icons.clear), color: kBlue,),
+                    ],
+                  ),
+                  Container(
+                    height: 60,
+                    width: size.width,
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: kBlue.withOpacity(0.1),
+                      borderRadius: const BorderRadius.horizontal(
+                          right: Radius.circular(4)
+                      ),
+                    ),
+                    child: Row(
+                      children: [
+                        Text(moods[index].action,
+                          style: kBigTextStyle,),
+                        const SizedBox(width: 12,),
+                        Text(moods[index].description,
+                          style: kBigTextStyle,),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    height: 200,
+                    width: size.width,
+                    margin: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                        color: kBlue.withOpacity(0.1),
+                        borderRadius: const BorderRadius.all(Radius.circular(4))
+                    ),
+                    child: moods[index].photo == ''
+                        ? const SizedBox.shrink()
+                        : Image.memory(base64Decode(moods[index].photo),),
+                  ),
+                ],
+              )
+          );
+        });
+  }
 
 }

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:mood/widgets/stars_widget.dart';
 import 'package:provider/provider.dart';
 import '../constants.dart';
 import '../models/database_helper.dart';
@@ -42,6 +43,7 @@ class MoodsListWidget extends StatelessWidget {
                       }
                       List<MoodModel> moods = snapshot.data!;
                       return GestureDetector(
+                        onTap: () => data.showDescription(context, moods, index),
                         onLongPress: () => data.deleteMood(
                             int.parse(moods[index].id.toString())),
                         child: Container(
@@ -71,6 +73,7 @@ class MoodsListWidget extends StatelessWidget {
                             ]
                           ),
                           child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               const SizedBox(width: 4,),
                               Container(
@@ -95,16 +98,15 @@ class MoodsListWidget extends StatelessWidget {
                                   )),
                               Column(
                                 children: [
-                                  Row(
-                                    children: [
-                                      Text(DateFormat('HH:mm').format(moods[index].time)),
-                                      const SizedBox(width: 12,),
-                                      Text(moods[index].rating),
-                                    ],
-                                  ),
-                                  Text(moods[index].action),
+                                  Text(DateFormat('HH:mm').format(moods[index].time),
+                                    style: kBigTextStyle,),
+                                  Text(moods[index].action, style: kBigTextStyle,),
                                 ],
                               ),
+                              StarsWidget(
+                                  stars: double.parse(moods[index].rating).toInt(),
+                                  mood: moods[index].mood,
+                              )
                             ],
                           ),
                         ),

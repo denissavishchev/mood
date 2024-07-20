@@ -11,16 +11,16 @@ const kBlack = Color(0xff010f19);
 const kWhite = Color(0xfffefffd);
 
 final kTextStyle = TextStyle(
-  color: kBlue,
+  color: kWhite,
   fontWeight: FontWeight.bold,
   fontSize: 24.sp,
   // fontFamily: 'Roboto'
 );
 
 final kBigTextStyle = TextStyle(
-  color: kBlue,
+  color: kWhite,
   fontWeight: FontWeight.bold,
-  fontSize: 32.sp,
+  fontSize: 30.sp,
   // fontFamily: 'Roboto'
 );
 

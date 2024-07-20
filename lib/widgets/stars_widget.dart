@@ -3,14 +3,16 @@ import '../constants.dart';
 
 class StarsWidget extends StatelessWidget {
   StarsWidget({super.key,
-    required this.stars,
+    required this.stars, 
+    required this.mood,
   });
 
   final int stars;
+  final String mood;
 
   final shadow = [
     const BoxShadow(
-        color: kBlue,
+        color: kWhite,
         blurRadius: 9,
         spreadRadius: 6,
         offset: Offset(0.5, 0.5)
@@ -19,12 +21,10 @@ class StarsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.sizeOf(context);
     return SizedBox(
-      width: size.width * 0.5,
-      height: 100,
+      width: 130,
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 12.0),
+        padding: const EdgeInsets.symmetric(vertical: 4.0),
         child: Stack(
           children: [
             Positioned(
@@ -34,19 +34,23 @@ class StarsWidget extends StatelessWidget {
                   stars >= 1
                       ? Icons.star
                       : Icons.star_border,
-                  color: kGrey,
-                  size: 50,
+                  color: mood == 'true' 
+                      ? kBlue.withOpacity(0.3)
+                      : kOrange.withOpacity(0.3),
+                  size: 30,
                   shadows: shadow,
                 )),
             Positioned(
                 top: 5,
-                left: 35,
+                left: 20,
                 child: Icon(
                   stars >= 2
                       ? Icons.star
                       : Icons.star_border,
-                  color: kGrey,
-                  size: 55,
+                  color: mood == 'true'
+                      ? kBlue.withOpacity(0.3)
+                      : kOrange.withOpacity(0.3),
+                  size: 35,
                   shadows: shadow,
                 )),
             Align(
@@ -55,19 +59,23 @@ class StarsWidget extends StatelessWidget {
                   stars >= 3
                       ? Icons.star
                       : Icons.star_border,
-                  color: kGrey,
-                  size: 60,
+                  color: mood == 'true'
+                      ? kBlue.withOpacity(0.3)
+                      : kOrange.withOpacity(0.3),
+                  size: 40,
                   shadows: shadow,
                 )),
             Positioned(
                 top: 5,
-                right: 35,
+                right: 20,
                 child: Icon(
                   stars >= 4
                       ? Icons.star
                       : Icons.star_border,
-                  color: kGrey,
-                  size: 55,
+                  color: mood == 'true'
+                      ? kBlue.withOpacity(0.3)
+                      : kOrange.withOpacity(0.3),
+                  size: 35,
                   shadows: shadow,
                 )),
             Positioned(
@@ -77,8 +85,10 @@ class StarsWidget extends StatelessWidget {
                   stars >= 5
                       ? Icons.star
                       : Icons.star_border,
-                  color: kGrey,
-                  size: 50,
+                  color: mood == 'true'
+                      ? kBlue.withOpacity(0.3)
+                      : kOrange.withOpacity(0.3),
+                  size: 30,
                   shadows: shadow,
                 )),
           ],

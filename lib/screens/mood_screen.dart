@@ -32,7 +32,7 @@ class MoodScreen extends StatelessWidget {
                       const NavigationButtonWidget(icon: Icons.account_balance_outlined,),
                       IconButton(
                         onPressed: () => MoodDatabaseHelper.deleteDatabase(),
-                        icon: const Icon(Icons.account_balance_outlined,)),
+                        icon: const Icon(Icons.delete_forever,)),
                     ],
                   ),
                 ),
@@ -92,7 +92,6 @@ class MoodScreen extends StatelessWidget {
                                                 begin: Alignment.bottomLeft,
                                                 end: Alignment.topRight
                                               ),
-                                              // value: double.parse(snapshot.data![i].rating),
                                               radius: double.parse(snapshot.data![i].rating) * 15
                                             );
                                           }))
