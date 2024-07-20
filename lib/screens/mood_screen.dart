@@ -30,6 +30,9 @@ class MoodScreen extends StatelessWidget {
                       const NavigationButtonWidget(icon: Icons.access_alarm,),
                       const NavigationButtonWidget(icon: Icons.account_circle_outlined,),
                       const NavigationButtonWidget(icon: Icons.account_balance_outlined,),
+                      IconButton(
+                        onPressed: () => MoodDatabaseHelper.deleteDatabase(),
+                        icon: const Icon(Icons.account_balance_outlined,)),
                     ],
                   ),
                 ),

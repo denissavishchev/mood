@@ -57,7 +57,9 @@ class MoodProvider with ChangeNotifier {
 
   Future pickAnImage()async{
     ImagePicker image = ImagePicker();
-    file = await image.pickImage(source: ImageSource.camera);
+    file = await image.pickImage(source: ImageSource.camera,
+        maxHeight: 1000.0,
+        maxWidth: 1000.0);
     if(file == null) return;
     List<int> imageBytes = File(file!.path).readAsBytesSync();
     base64String = base64Encode(imageBytes);
