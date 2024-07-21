@@ -4,6 +4,8 @@ import 'package:path/path.dart';
 
 class MoodDatabaseHelper {
 
+  List<Map<String, dynamic>> dates = [];
+
   static Future<Database> _openDatabase() async{
     Database database = await openDatabase(
       join(await getDatabasesPath(), 'database.db'),

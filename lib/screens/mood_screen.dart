@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:mood/constants.dart';
 import 'package:mood/screens/add_mood_screen.dart';
@@ -27,12 +28,11 @@ class MoodScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Text('Mood', style: kBigOrangeTextStyle,),
-                      const NavigationButtonWidget(icon: Icons.access_alarm,),
-                      const NavigationButtonWidget(icon: Icons.account_circle_outlined,),
-                      const NavigationButtonWidget(icon: Icons.account_balance_outlined,),
-                      IconButton(
-                        onPressed: () => MoodDatabaseHelper.deleteDatabase(),
-                        icon: const Icon(Icons.delete_forever,)),
+                      NavigationButtonWidget(icon: Icons.account_circle_outlined, onTap: () {},),
+                      NavigationButtonWidget(icon: Icons.account_balance_outlined, onTap: () {  },),
+                      // IconButton(
+                      //   onPressed: () => MoodDatabaseHelper.deleteDatabase(),
+                      //   icon: const Icon(Icons.delete_forever,)),
                     ],
                   ),
                 ),
@@ -42,7 +42,16 @@ class MoodScreen extends StatelessWidget {
                     const MoodsListWidget(color: kOrange,),
                     const SizedBox(height: 24,),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
+                        const Spacer(),
+                        NavigationButtonWidget(
+                          icon: Icons.calendar_month,
+                          onTap: () => data.showHistory(context),),
+                        const Spacer(),
+                        Text(data.selectedDate?.day == DateTime.now().day
+                            ? 'Today'
+                            : DateFormat('y-MM-d').format(DateTime.parse(data.selectedDate.toString()))),
                         const Spacer(),
                         FutureBuilder(
                             future: MoodDatabaseHelper.getData(),
@@ -77,23 +86,33 @@ class MoodScreen extends StatelessWidget {
                                         PieChartData(
                                           startDegreeOffset: -90,
                                           sections: List.generate(moods.length, ((i){
-                                            return PieChartSectionData(
-                                              color: snapshot.data![i].mood == 'true'
-                                                  ? kOrange : kBlue,
-                                              gradient: LinearGradient(
-                                                colors: [
-                                                  moods[i].mood == 'true'
-                                                      ? kYellow.withOpacity(0.7)
-                                                      : kNavy.withOpacity(0.7),
-                                                  moods[i].mood == 'true'
-                                                      ? kOrange.withOpacity(0.7)
-                                                      : kBlue.withOpacity(0.7)
-                                                ],
-                                                begin: Alignment.bottomLeft,
-                                                end: Alignment.topRight
-                                              ),
-                                              radius: double.parse(snapshot.data![i].rating) * 15
-                                            );
+                                            if(DateFormat('y-MM-d').format(moods[i].time) ==
+                                                DateFormat('y-MM-d').format(DateTime.parse(data.selectedDate.toString()))){
+                                              for(final m in moods){
+                                                data.barRatings.addAll({m.mood : double.parse(m.rating)});
+                                              }
+                                              return PieChartSectionData(
+                                                  color: moods[i].mood == 'true'
+                                                      ? kOrange : kBlue,
+                                                  gradient: LinearGradient(
+                                                      colors: [
+                                                        moods[i].mood == 'true'
+                                                            ? kYellow.withOpacity(0.7)
+                                                            : kNavy.withOpacity(0.7),
+                                                        moods[i].mood == 'true'
+                                                            ? kOrange.withOpacity(0.7)
+                                                            : kBlue.withOpacity(0.7)
+                                                      ],
+                                                      begin: Alignment.bottomLeft,
+                                                      end: Alignment.topRight
+                                                  ),
+                                                  radius: double.parse(moods[i].rating ) * 15
+                                              );
+                                            }else{
+                                              return PieChartSectionData(
+                                                value: 0,
+                                              );
+                                            }
                                           }))
                                         )
                                       ),

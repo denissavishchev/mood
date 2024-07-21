@@ -42,7 +42,7 @@ class MoodSwitchWidget extends StatelessWidget {
                           color: data.moodState
                               ? kOrange.withOpacity(0.3)
                               : kBlue.withOpacity(0.3),
-                          borderRadius: BorderRadius.all(Radius.circular(12))
+                          borderRadius: const BorderRadius.all(Radius.circular(12))
                       ),
                       child: Center(
                         child: Text(data.moodState ? 'Mood' : 'is bad', style: kBigTextStyle,),

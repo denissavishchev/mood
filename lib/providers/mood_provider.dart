@@ -7,8 +7,6 @@ import '../constants.dart';
 import '../models/database_helper.dart';
 import 'package:image_picker/image_picker.dart';
 
-
-
 class MoodProvider with ChangeNotifier {
 
   final actionTextController = TextEditingController();
@@ -22,6 +20,20 @@ class MoodProvider with ChangeNotifier {
 
   bool moodState = true;
   double stars = 0.0;
+  Map<String, double> barRatings = {};
+  List<MoodModel> dates = [];
+  DateTime? selectedDate = DateTime.now();
+
+  Future showHistory(context) async{
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: selectedDate,
+      firstDate: DateTime(dates.first.time.year, dates.first.time.month, dates.first.time.day),
+      lastDate: DateTime(dates.last.time.year, dates.last.time.month, dates.last.time.day),
+    );
+    selectedDate = picked;
+    notifyListeners();
+  }
 
   void toMoodScreen(context){
     cleanData();
