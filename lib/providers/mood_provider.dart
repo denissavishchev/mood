@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:mood/models/mood_model.dart';
 import 'package:mood/screens/mood_screen.dart';
@@ -24,14 +25,26 @@ class MoodProvider with ChangeNotifier {
   List<MoodModel> dates = [];
   DateTime? selectedDate = DateTime.now();
 
+  bool isToday(String first, String second){
+    if(DateFormat('y-MM-d').format(DateTime.parse(first)) ==
+        DateFormat('y-MM-d').format(DateTime.parse(second))){
+      return true;
+    }
+    return false;
+  }
+
   Future showHistory(context) async{
     final DateTime? picked = await showDatePicker(
       context: context,
+      locale: const Locale('en', 'GB'),
       initialDate: selectedDate,
       firstDate: DateTime(dates.first.time.year, dates.first.time.month, dates.first.time.day),
       lastDate: DateTime(dates.last.time.year, dates.last.time.month, dates.last.time.day),
     );
     selectedDate = picked;
+    if(picked == null){
+      selectedDate = DateTime.now();
+    }
     notifyListeners();
   }
 

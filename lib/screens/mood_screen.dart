@@ -37,10 +37,9 @@ class MoodScreen extends StatelessWidget {
                   ),
                 ),
                 Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const MoodsListWidget(color: kOrange,),
-                    const SizedBox(height: 24,),
+                    const SizedBox(height: 12,),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -60,73 +59,78 @@ class MoodScreen extends StatelessWidget {
                                 return const Center(child: CircularProgressIndicator());
                               }
                               final moods = snapshot.data!;
-                              return GestureDetector(
-                                onTap: () => Navigator.pushReplacement(context,
-                                    MaterialPageRoute(builder: (context) =>
-                                    const AddMoodScreen())),
-                                child: Container(
-                                  width: 200,
-                                  height: 200,
-                                  padding: const EdgeInsets.all(2),
-                                  decoration: const BoxDecoration(
-                                      borderRadius: BorderRadius.all(Radius.circular(100)),
-                                      color: kGrey,
-                                      boxShadow: [
-                                        BoxShadow(
-                                            blurRadius: 2,
-                                            spreadRadius: 2,
-                                            color: kWhite
-                                        )
-                                      ]
-                                  ),
-                                  child: Stack(
-                                    alignment: Alignment.center,
-                                    children: [
-                                      PieChart(
-                                        PieChartData(
-                                          startDegreeOffset: -90,
-                                          sections: List.generate(moods.length, ((i){
-                                            if(DateFormat('y-MM-d').format(moods[i].time) ==
-                                                DateFormat('y-MM-d').format(DateTime.parse(data.selectedDate.toString()))){
-                                              for(final m in moods){
-                                                data.barRatings.addAll({m.mood : double.parse(m.rating)});
+                              return AbsorbPointer(
+                                absorbing: !data.isToday(data.selectedDate.toString(), DateTime.now().toString()),
+                                child: GestureDetector(
+                                  onTap: () => Navigator.pushReplacement(context,
+                                      MaterialPageRoute(builder: (context) =>
+                                      const AddMoodScreen())),
+                                  child: Container(
+                                    width: 200,
+                                    height: 200,
+                                    padding: const EdgeInsets.all(2),
+                                    decoration: const BoxDecoration(
+                                        borderRadius: BorderRadius.all(Radius.circular(100)),
+                                        color: kGrey,
+                                        boxShadow: [
+                                          BoxShadow(
+                                              blurRadius: 2,
+                                              spreadRadius: 2,
+                                              color: kWhite
+                                          )
+                                        ]
+                                    ),
+                                    child: Stack(
+                                      alignment: Alignment.center,
+                                      children: [
+                                        PieChart(
+                                          PieChartData(
+                                            startDegreeOffset: -90,
+                                            sections: List.generate(moods.length, ((i){
+                                              if(data.isToday(moods[i].time.toString(), data.selectedDate.toString())){
+                                                for(final m in moods){
+                                                  data.barRatings.addAll({m.mood : double.parse(m.rating)});
+                                                }
+                                                return PieChartSectionData(
+                                                    color: moods[i].mood == 'true'
+                                                        ? kOrange : kBlue,
+                                                    gradient: LinearGradient(
+                                                        colors: [
+                                                          moods[i].mood == 'true'
+                                                              ? kYellow.withOpacity(0.7)
+                                                              : kNavy.withOpacity(0.7),
+                                                          moods[i].mood == 'true'
+                                                              ? kOrange.withOpacity(0.7)
+                                                              : kBlue.withOpacity(0.7)
+                                                        ],
+                                                        begin: Alignment.bottomLeft,
+                                                        end: Alignment.topRight
+                                                    ),
+                                                    radius: double.parse(moods[i].rating ) * 15
+                                                );
+                                              }else{
+                                                return PieChartSectionData(
+                                                  value: 0,
+                                                );
                                               }
-                                              return PieChartSectionData(
-                                                  color: moods[i].mood == 'true'
-                                                      ? kOrange : kBlue,
-                                                  gradient: LinearGradient(
-                                                      colors: [
-                                                        moods[i].mood == 'true'
-                                                            ? kYellow.withOpacity(0.7)
-                                                            : kNavy.withOpacity(0.7),
-                                                        moods[i].mood == 'true'
-                                                            ? kOrange.withOpacity(0.7)
-                                                            : kBlue.withOpacity(0.7)
-                                                      ],
-                                                      begin: Alignment.bottomLeft,
-                                                      end: Alignment.topRight
-                                                  ),
-                                                  radius: double.parse(moods[i].rating ) * 15
-                                              );
-                                            }else{
-                                              return PieChartSectionData(
-                                                value: 0,
-                                              );
-                                            }
-                                          }))
-                                        )
-                                      ),
-                                      Container(
-                                        width: 44,
-                                        height: 44,
-                                        decoration: BoxDecoration(
-                                          color: kGrey,
-                                          borderRadius: const BorderRadius.all(Radius.circular(25),),
-                                          border: Border.all(color: kOrange.withOpacity(0.7), width: 1.5),
+                                            }))
+                                          )
                                         ),
-                                        child: const Center(child: Icon(Icons.add)),
-                                      )
-                                    ],
+                                        Container(
+                                          width: 44,
+                                          height: 44,
+                                          decoration: BoxDecoration(
+                                            color: kGrey,
+                                            borderRadius: const BorderRadius.all(Radius.circular(25),),
+                                            border: Border.all(color: kOrange.withOpacity(0.7), width: 1.5),
+                                          ),
+                                          child: Center(
+                                              child: Icon(
+                                                  data.isToday(data.selectedDate.toString(), DateTime.now().toString())
+                                                      ? Icons.add : Icons.cancel)),
+                                        )
+                                      ],
+                                    ),
                                   ),
                                 ),
                               );
@@ -137,6 +141,7 @@ class MoodScreen extends StatelessWidget {
                     )
                   ],
                 ),
+                const SizedBox(height: 10,),
               ],
             ),
           );
