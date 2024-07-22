@@ -44,13 +44,22 @@ class MoodScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const Spacer(),
-                        NavigationButtonWidget(
-                          icon: Icons.calendar_month,
-                          onTap: () => data.showHistory(context),),
-                        const Spacer(),
-                        Text(data.selectedDate?.day == DateTime.now().day
-                            ? 'Today'
-                            : DateFormat('y-MM-d').format(DateTime.parse(data.selectedDate.toString()))),
+                        Visibility(
+                          visible: data.dates.isNotEmpty,
+                            child: SizedBox(
+                              width: size.width * 0.4,
+                              child: Row(
+                                children: [
+                                  NavigationButtonWidget(
+                                    icon: Icons.calendar_month,
+                                    onTap: () => data.showHistory(context),),
+                                  const SizedBox(width: 20,),
+                                  Text(data.selectedDate?.day == DateTime.now().day
+                                      ? 'Today'
+                                      : DateFormat('y-MM-d').format(DateTime.parse(data.selectedDate.toString()))),
+                                ],
+                              ),
+                            )),
                         const Spacer(),
                         FutureBuilder(
                             future: MoodDatabaseHelper.getData(),
