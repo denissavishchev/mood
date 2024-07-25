@@ -42,7 +42,7 @@ class AddMoodScreen extends StatelessWidget {
                         Row(
                           children: [
                             IconButton(
-                                onPressed: () => data.toMoodScreen(context),
+                                onPressed: () => data.toMainScreen(context, 0),
                                 icon: const Icon(Icons.arrow_back_ios_new, color: kWhite,)
                             )
                           ],

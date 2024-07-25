@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:mood/models/mood_model.dart';
+import 'package:mood/screens/calories_screen.dart';
+import 'package:mood/screens/main_screen.dart';
 import 'package:mood/screens/mood_screen.dart';
 import '../constants.dart';
 import '../models/database_helper.dart';
@@ -24,6 +26,33 @@ class MoodProvider with ChangeNotifier {
   Map<String, double> barRatings = {};
   List<MoodModel> dates = [];
   DateTime? selectedDate = DateTime.now();
+  int currentPageIndex = 0;
+
+  List<IconData> pageIcons = [
+    Icons.mood,
+    Icons.set_meal_outlined,
+    Icons.animation,
+    Icons.settings
+  ];
+
+  void switchPage(int index){
+    currentPageIndex = index;
+    notifyListeners();
+  }
+
+  Widget currentPage(){
+    switch (currentPageIndex) {
+      case 0:
+        return const MoodScreen();
+      case 1:
+        return const CaloriesScreen();
+      case 2:
+        return const MoodScreen();
+      case 3:
+        return const CaloriesScreen();
+    }
+    return const MoodScreen();
+  }
 
   bool isToday(String first, String second){
     if(DateFormat('y-MM-d').format(DateTime.parse(first)) ==
@@ -48,11 +77,12 @@ class MoodProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void toMoodScreen(context){
+  void toMainScreen(context, int index){
     cleanData();
+    currentPageIndex = index;
     Navigator.pushReplacement(context,
         MaterialPageRoute(builder: (context) =>
-        const MoodScreen()));
+        const MainScreen()));
   }
 
   void updateRating(double rating){
@@ -106,9 +136,7 @@ class MoodProvider with ChangeNotifier {
     );
     await MoodDatabaseHelper.insertMood(mood: mood);
     cleanData();
-    Navigator.pushReplacement(context,
-        MaterialPageRoute(builder: (context) =>
-        const MoodScreen()));
+    toMainScreen(context, 0);
   }
 
   void deleteMood(int docId) async{

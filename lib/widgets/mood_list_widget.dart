@@ -11,10 +11,7 @@ import '../providers/mood_provider.dart';
 class MoodsListWidget extends StatelessWidget {
   const MoodsListWidget({
     super.key,
-    required this.color,
   });
-
-  final Color color;
 
   @override
   Widget build(BuildContext context) {

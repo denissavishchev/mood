@@ -2,7 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mood/providers/mood_provider.dart';
-import 'package:mood/screens/mood_screen.dart';
+import 'package:mood/screens/main_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() async{
@@ -29,7 +29,7 @@ void main() async{
                     localizationsDelegates: context.localizationDelegates,
                     supportedLocales: context.supportedLocales,
                     locale: context.locale,
-                    home: const MoodScreen(),
+                    home: const MainScreen(),
                   ),
                 );
               }

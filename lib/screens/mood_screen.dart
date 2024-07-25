@@ -21,25 +21,9 @@ class MoodScreen extends StatelessWidget {
             backgroundColor: kGrey,
             body: Column(
               children: [
-                const SizedBox(height: 40,),
-                SizedBox(
-                  height: size.height * 0.07,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Text('Mood', style: kBigOrangeTextStyle,),
-                      NavigationButtonWidget(icon: Icons.account_circle_outlined, onTap: () {},),
-                      NavigationButtonWidget(icon: Icons.account_balance_outlined, onTap: () {  },),
-                      // IconButton(
-                      //   onPressed: () => MoodDatabaseHelper.deleteDatabase(),
-                      //   icon: const Icon(Icons.delete_forever,)),
-                    ],
-                  ),
-                ),
                 Column(
                   children: [
-                    const MoodsListWidget(color: kOrange,),
-                    const SizedBox(height: 12,),
+                    const MoodsListWidget(),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -69,7 +53,9 @@ class MoodScreen extends StatelessWidget {
                               }
                               final moods = snapshot.data!;
                               return AbsorbPointer(
-                                absorbing: !data.isToday(data.selectedDate.toString(), DateTime.now().toString()),
+                                absorbing: !data.isToday(
+                                    data.selectedDate.toString(),
+                                    DateTime.now().toString()),
                                 child: GestureDetector(
                                   onTap: () => Navigator.pushReplacement(context,
                                       MaterialPageRoute(builder: (context) =>
