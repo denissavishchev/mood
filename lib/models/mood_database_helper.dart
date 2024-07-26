@@ -43,7 +43,7 @@ class MoodDatabaseHelper {
           place: moods[i]['place'],
           rating: moods[i]['rating'],
           description: moods[i]['description'],
-          photo: moods[i]['photo'],
+          photo: '',
           time: DateTime.parse(moods[i]['time'])
       );
     });

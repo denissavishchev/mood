@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-
 import '../constants.dart';
 
-class NavigationButtonWidget extends StatelessWidget {
-  const NavigationButtonWidget({
+class ButtonWidget extends StatelessWidget {
+  const ButtonWidget({
     super.key,
     required this.icon,
     required this.onTap,

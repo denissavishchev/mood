@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:mood/constants.dart';
 import 'package:mood/screens/add_mood_screen.dart';
 import 'package:provider/provider.dart';
-import '../models/database_helper.dart';
+import '../models/mood_database_helper.dart';
 import '../providers/mood_provider.dart';
 import '../widgets/mood_list_widget.dart';
-import '../widgets/navigation_button_widget.dart';
+import '../widgets/button_widget.dart';
 import 'package:fl_chart/fl_chart.dart';
 
 class MoodScreen extends StatelessWidget {
@@ -34,7 +34,7 @@ class MoodScreen extends StatelessWidget {
                               width: size.width * 0.4,
                               child: Row(
                                 children: [
-                                  NavigationButtonWidget(
+                                  ButtonWidget(
                                     icon: Icons.calendar_month,
                                     onTap: () => data.showHistory(context),),
                                   const SizedBox(width: 20,),

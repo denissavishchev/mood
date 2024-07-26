@@ -52,7 +52,21 @@ class MainScreen extends StatelessWidget {
                                 width: size.height * 0.06,
                                 height: size.height * 0.06,
                                 decoration: BoxDecoration(
-                                  border: Border.all(color: kWhite, width: 1),
+                                  border: Border.all(
+                                      color: data.currentPageIndex == i
+                                          ? kOrange.withOpacity(0.3)
+                                          : kWhite,
+                                      width: 1),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: data.currentPageIndex == i
+                                            ? kOrange.withOpacity(0.15)
+                                            : kBlack.withOpacity(0.2),
+                                        spreadRadius: 2,
+                                        blurRadius: 2,
+                                        offset: Offset(0, data.currentPageIndex == i ? 0 : 2)
+                                      )
+                                    ],
                                     gradient: const LinearGradient(
                                         colors: [
                                           kGrey,

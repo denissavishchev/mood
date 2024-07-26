@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mood/providers/meal_provider.dart';
 import 'package:mood/providers/mood_provider.dart';
 import 'package:mood/screens/main_screen.dart';
 import 'package:provider/provider.dart';
@@ -19,6 +20,7 @@ void main() async{
           child: MultiProvider(
               providers: [
                 ChangeNotifierProvider<MoodProvider>(create: (_) => MoodProvider()),
+                ChangeNotifierProvider<MealProvider>(create: (_) => MealProvider()),
 
               ],
               builder: (context, child) {

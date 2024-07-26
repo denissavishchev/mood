@@ -1,58 +1,35 @@
 import 'dart:convert';
 import 'dart:io';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:mood/models/mood_model.dart';
-import 'package:mood/screens/meal_screen.dart';
-import 'package:mood/screens/main_screen.dart';
-import 'package:mood/screens/mood_screen.dart';
-import '../constants.dart';
-import '../models/mood_database_helper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
-class MoodProvider with ChangeNotifier {
+import '../constants.dart';
+import '../models/meal_database_helper.dart';
+import '../models/meal_model.dart';
+import 'mood_provider.dart';
 
-  final actionTextController = TextEditingController();
+class MealProvider with ChangeNotifier {
+
+  final mealTextController = TextEditingController();
+  final healthTextController = TextEditingController();
+  final howtoTextController = TextEditingController();
   final personTextController = TextEditingController();
   final placeTextController = TextEditingController();
-  final descriptionTextController = TextEditingController();
+  final ratingTextController = TextEditingController();
+  final caloriesTextController = TextEditingController();
+  final opinionTextController = TextEditingController();
 
   late XFile? file;
   String fileName = '';
   String base64String = '';
 
-  bool moodState = true;
   double stars = 0.0;
-  Map<String, double> barRatings = {};
-  List<MoodModel> dates = [];
+  List<MealModel> dates = [];
   DateTime? selectedDate = DateTime.now();
-  int currentPageIndex = 0;
 
-  List<IconData> pageIcons = [
-    Icons.mood,
-    Icons.set_meal_outlined,
-    Icons.animation,
-    Icons.settings
-  ];
-
-  void switchPage(int index){
-    currentPageIndex = index;
-    notifyListeners();
-  }
-
-  Widget currentPage(){
-    switch (currentPageIndex) {
-      case 0:
-        return const MoodScreen();
-      case 1:
-        return const MealScreen();
-      case 2:
-        return const MoodScreen();
-      case 3:
-        return const MealScreen();
-    }
-    return const MoodScreen();
-  }
 
   bool isToday(String first, String second){
     if(DateFormat('y-MM-d').format(DateTime.parse(first)) ==
@@ -60,6 +37,11 @@ class MoodProvider with ChangeNotifier {
       return true;
     }
     return false;
+  }
+
+  void deleteMeal(int docId) async{
+    await MealDatabaseHelper.deleteMeal(docId);
+    notifyListeners();
   }
 
   Future showHistory(context) async{
@@ -77,40 +59,6 @@ class MoodProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void toMainScreen(context, int index){
-    cleanData();
-    currentPageIndex = index;
-    Navigator.pushReplacement(context,
-        MaterialPageRoute(builder: (context) =>
-        const MainScreen()));
-  }
-
-  void updateRating(double rating){
-    stars = rating;
-    notifyListeners();
-  }
-
-  void switchMood(){
-    moodState = !moodState;
-    notifyListeners();
-  }
-
-  String doughnut(String rating){
-    switch (rating) {
-      case '1':
-        return '30%';
-      case '2':
-        return '50%';
-      case '3':
-        return '70%';
-      case '4':
-        return '85%';
-      case '5':
-        return '100%';
-    }
-    return '30%';
-  }
-
   Future pickAnImage()async{
     ImagePicker image = ImagePicker();
     file = await image.pickImage(source: ImageSource.camera,
@@ -123,39 +71,39 @@ class MoodProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  insertMood(context) async{
-    final mood = MoodModel(
-        mood: moodState.toString(),
-        action: actionTextController.text,
+  insertMeal(context) async{
+    final mood = Provider.of<MoodProvider>(context, listen: false);
+    final meal = MealModel(
+        meal: mealTextController.text,
+        health: healthTextController.text,
+        howto: howtoTextController.text,
         person: personTextController.text,
         place: placeTextController.text,
-        rating: stars.toString(),
-        description: descriptionTextController.text,
+        rating: ratingTextController.text,
+        calories: caloriesTextController.text,
+        opinion: opinionTextController.text,
         photo: base64String,
         time: DateTime.now()
     );
-    await MoodDatabaseHelper.insertMood(mood: mood);
+    await MealDatabaseHelper.insertMeal(meal: meal);
     cleanData();
-    toMainScreen(context, 0);
-  }
-
-  void deleteMood(int docId) async{
-    await MoodDatabaseHelper.deleteMood(docId);
-    notifyListeners();
+    mood.toMainScreen(context, 1);
   }
 
   void cleanData(){
-    actionTextController.clear();
+    mealTextController.clear();
+    healthTextController.clear();
+    howtoTextController.clear();
     personTextController.clear();
     placeTextController.clear();
-    descriptionTextController.clear();
-    moodState = true;
+    caloriesTextController.clear();
+    opinionTextController.clear();
     stars = 0.0;
     fileName = '';
     base64String = '';
   }
 
-  Future<void>showDescription(context, List<MoodModel> moods, int index) async{
+  Future<void>showDescription(context, List<MealModel> meals, int index) async{
     Size size = MediaQuery.sizeOf(context);
     return showModalBottomSheet(
         context: context,
@@ -193,10 +141,10 @@ class MoodProvider with ChangeNotifier {
                     ),
                     child: Row(
                       children: [
-                        Text(moods[index].action,
+                        Text(meals[index].meal,
                           style: kBigTextStyle,),
                         const SizedBox(width: 12,),
-                        Text(moods[index].description,
+                        Text(meals[index].opinion,
                           style: kBigTextStyle,),
                       ],
                     ),
@@ -209,14 +157,15 @@ class MoodProvider with ChangeNotifier {
                         color: kBlue.withOpacity(0.1),
                         borderRadius: const BorderRadius.all(Radius.circular(4))
                     ),
-                    child: moods[index].photo == ''
+                    child: meals[index].photo == ''
                         ? const SizedBox.shrink()
-                        : Image.memory(base64Decode(moods[index].photo),),
+                        : Image.memory(base64Decode(meals[index].photo),),
                   ),
                 ],
               )
           );
         });
   }
+
 
 }
