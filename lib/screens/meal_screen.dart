@@ -22,11 +22,13 @@ class MealScreen extends StatelessWidget {
         body: Column(
           children: [
             const Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 MealListWidget(),
                 WaterListWidget()
               ],
             ),
+            const SizedBox(height: 50,),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
@@ -63,26 +65,27 @@ class MealScreen extends StatelessWidget {
                             absorbing: !data.isToday(
                                 data.selectedDate.toString(),
                                 DateTime.now().toString()),
-                            child: GestureDetector(
-                                onTap: () => Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const AddMealScreen())),
-                                child: const Text('Meal')),
+                            child: ButtonWidget(
+                              icon: Icons.fastfood,
+                              onTap: () => Navigator.pushReplacement(context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                    const AddMealScreen())),
+
+                            ),
                           ),
-                          const SizedBox(width: 100,),
+                          const SizedBox(width: 50,),
                           AbsorbPointer(
                             absorbing: !data.isToday(
                                 data.selectedDate.toString(),
                                 DateTime.now().toString()),
-                            child: GestureDetector(
-                                onTap: () => Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const AddWaterScreen())),
-                                child: const Text('Water')),
+                            child: ButtonWidget(
+                              icon: Icons.water_drop,
+                              onTap: () => Navigator.pushReplacement(context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                      const AddWaterScreen())),
+                            ),
                           ),
                         ],
                       );

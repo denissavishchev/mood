@@ -32,7 +32,8 @@ class MealProvider with ChangeNotifier {
   double stars = 0.0;
   List<MealModel> dates = [];
   DateTime? selectedDate = DateTime.now();
-
+  double calories = 0.0;
+  double water = 0.0;
 
   bool isToday(String first, String second){
     if(DateFormat('y-MM-d').format(DateTime.parse(first)) ==

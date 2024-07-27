@@ -47,9 +47,9 @@ class MoodProvider with ChangeNotifier {
       case 1:
         return const MealScreen();
       case 2:
-        return const MoodScreen();
+        return const Text('Sleep');
       case 3:
-        return const MealScreen();
+        return const Text('Settings');
     }
     return const MoodScreen();
   }
