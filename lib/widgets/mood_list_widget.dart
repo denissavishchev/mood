@@ -33,7 +33,7 @@ class MoodsListWidget extends StatelessWidget {
               builder: (context, snapshot){
                 if(snapshot.connectionState == ConnectionState.waiting){
                   return const Center(child: CircularProgressIndicator());
-                }else if(!snapshot.hasData){
+                }else if(snapshot.data![1].isEmpty){
                   if(!data.isToday(data.selectedDate.toString(), DateTime.now().toString())){
                     return const Center(child: Text('No data in this day'));
                   }else{

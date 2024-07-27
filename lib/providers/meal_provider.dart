@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 import '../constants.dart';
 import '../models/meal_database_helper.dart';
 import '../models/meal_model.dart';
+import '../models/water_model.dart';
 import 'mood_provider.dart';
 
 class MealProvider with ChangeNotifier {
@@ -21,6 +22,8 @@ class MealProvider with ChangeNotifier {
   final ratingTextController = TextEditingController();
   final caloriesTextController = TextEditingController();
   final opinionTextController = TextEditingController();
+  final waterTypeTextController = TextEditingController();
+  final waterQuantityTextController = TextEditingController();
 
   late XFile? file;
   String fileName = '';
@@ -90,6 +93,18 @@ class MealProvider with ChangeNotifier {
     mood.toMainScreen(context, 1);
   }
 
+  insertWater(context) async{
+    final mood = Provider.of<MoodProvider>(context, listen: false);
+    final water = WaterModel(
+        type: waterTypeTextController.text,
+        quantity: waterQuantityTextController.text,
+        time: DateTime.now(),
+    );
+    await MealDatabaseHelper.insertWater(water: water);
+    cleanData();
+    mood.toMainScreen(context, 1);
+  }
+
   void cleanData(){
     mealTextController.clear();
     healthTextController.clear();
@@ -98,6 +113,8 @@ class MealProvider with ChangeNotifier {
     placeTextController.clear();
     caloriesTextController.clear();
     opinionTextController.clear();
+    waterTypeTextController.clear();
+    waterQuantityTextController.clear();
     stars = 0.0;
     fileName = '';
     base64String = '';

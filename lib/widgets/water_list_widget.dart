@@ -1,15 +1,13 @@
-import 'dart:convert';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:mood/widgets/stars_widget.dart';
 import 'package:provider/provider.dart';
 import '../constants.dart';
 import '../models/meal_database_helper.dart';
-import '../models/meal_model.dart';
+import '../models/water_model.dart';
 import '../providers/meal_provider.dart';
 
-class MealListWidget extends StatelessWidget {
-  const MealListWidget({
+class WaterListWidget extends StatelessWidget {
+  const WaterListWidget({
     super.key,
   });
 
@@ -20,26 +18,25 @@ class MealListWidget extends StatelessWidget {
         builder: (context, data, _){
           return Container(
             height: size.height * 0.6,
-            width: size.width * 0.7,
+            width: size.width * 0.25,
             clipBehavior: Clip.hardEdge,
             decoration: const BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(4))
             ),
             child: FutureBuilder(
               future: Future.wait([
-                MealDatabaseHelper.getMealData(),
-                MealDatabaseHelper.getSingleMealData(DateFormat('y-MM-d').format(
+                MealDatabaseHelper.getWaterData(),
+                MealDatabaseHelper.getSingleWaterData(DateFormat('y-MM-d').format(
                     DateTime.parse(data.selectedDate.toString())))]),
               builder: (context, snapshot){
                 if(snapshot.connectionState == ConnectionState.waiting){
                   return const Center(child: CircularProgressIndicator());
                 }else if(snapshot.data![1].isEmpty){
                   if(!data.isToday(data.selectedDate.toString(), DateTime.now().toString())){
-                    return const Center(child: Text('No data in this day'));
+                    return const Center(child: Text('No'));
                   }else{
-                    return const Center(child: Text('Today is a good day to start'));
+                    return const Center(child: Text('start'));
                   }
-
                 }
                 return ListView.builder(
                     itemCount: snapshot.data?[1].length,
@@ -48,12 +45,12 @@ class MealListWidget extends StatelessWidget {
                       if(snapshot.data == null){
                         return const Text('No data');
                       }
-                      List<MealModel> meals = snapshot.data![1];
-                      data.dates = snapshot.data![0];
+                      List<WaterModel> water = snapshot.data![1];
+                      // data.dates = snapshot.data![0];
                       return GestureDetector(
-                        onTap: () => data.showDescription(context, meals, index),
+                        // onTap: () => data.showDescription(context, water, index),
                         onLongPress: () => data.deleteMeal(
-                            int.parse(meals[index].id.toString())),
+                            int.parse(water[index].id.toString())),
                         child: Container(
                           height: 60,
                           width:  size.width * 0.8,
@@ -62,12 +59,12 @@ class MealListWidget extends StatelessWidget {
                           decoration: BoxDecoration(
                               gradient: LinearGradient(
                                 colors: [
-                                  meals[index].health == 'true'
-                                      ? kYellow.withOpacity(0.7)
-                                      : kNavy.withOpacity(0.7),
-                                  meals[index].health == 'true'
-                                      ? kOrange.withOpacity(0.7)
-                                      : kBlue.withOpacity(0.7)
+                                  water[index].type == 'water'
+                                      ? kNavy.withOpacity(0.7)
+                                      : kYellow.withOpacity(0.7),
+                                  water[index].type == 'water'
+                                      ? kBlue.withOpacity(0.7)
+                                      : kOrange.withOpacity(0.7)
                                 ],
                               ),
                               borderRadius: const BorderRadius.all(Radius.circular(4)),
@@ -84,37 +81,14 @@ class MealListWidget extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               const SizedBox(width: 4,),
-                              Container(
-                                  width: 50,
-                                  height: 50,
-                                  clipBehavior: Clip.hardEdge,
-                                  decoration: BoxDecoration(
-                                    borderRadius: const BorderRadius.all(Radius.circular(25)),
-                                    boxShadow: [
-                                      BoxShadow(
-                                          spreadRadius: 2,
-                                          blurRadius: 1,
-                                          color: meals[index].health == 'true'
-                                              ? kOrange.withOpacity(0.3) : kBlue.withOpacity(0.3)
-                                      )
-                                    ],
-                                  ),
-                                  child: meals[index].photo == ''
-                                      ? const SizedBox.shrink()
-                                      : CircleAvatar(
-                                    backgroundImage: MemoryImage(base64Decode(meals[index].photo),),
-                                  )),
                               Column(
                                 children: [
-                                  Text(DateFormat('HH:mm').format(meals[index].time),
+                                  Text(DateFormat('HH:mm').format(water[index].time),
                                     style: kBigTextStyle,),
-                                  Text(meals[index].meal, style: kBigTextStyle,),
+                                  Text(water[index].type, style: kBigTextStyle,),
                                 ],
                               ),
-                              StarsWidget(
-                                stars: double.parse(meals[index].rating).toInt(),
-                                mood: meals[index].health,
-                              )
+                              Text(water[index].quantity)
                             ],
                           ),
                         ),
