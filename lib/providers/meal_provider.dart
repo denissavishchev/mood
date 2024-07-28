@@ -15,14 +15,10 @@ import 'mood_provider.dart';
 class MealProvider with ChangeNotifier {
 
   final mealTextController = TextEditingController();
-  final healthTextController = TextEditingController();
-  final howtoTextController = TextEditingController();
   final personTextController = TextEditingController();
   final placeTextController = TextEditingController();
-  final ratingTextController = TextEditingController();
   final caloriesTextController = TextEditingController();
   final opinionTextController = TextEditingController();
-  final waterTypeTextController = TextEditingController();
   final waterQuantityTextController = TextEditingController();
 
   late XFile? file;
@@ -34,6 +30,34 @@ class MealProvider with ChangeNotifier {
   DateTime? selectedDate = DateTime.now();
   double calories = 0.0;
   double water = 0.0;
+  bool mealState = true;
+  String waterType = 'water';
+
+  List<String> waterIcons = [
+    'water',
+    'coffee',
+    'tea',
+    'juice',
+    'soda',
+    'beer',
+    'wine',
+    'alcohol',
+  ];
+
+  void updateWaterType(String type){
+    waterType = type;
+    notifyListeners();
+  }
+
+  void updateRating(double rating){
+    stars = rating;
+    notifyListeners();
+  }
+
+  void switchMeal(){
+    mealState = !mealState;
+    notifyListeners();
+  }
 
   bool isToday(String first, String second){
     if(DateFormat('y-MM-d').format(DateTime.parse(first)) ==
@@ -79,11 +103,11 @@ class MealProvider with ChangeNotifier {
     final mood = Provider.of<MoodProvider>(context, listen: false);
     final meal = MealModel(
         meal: mealTextController.text,
-        health: healthTextController.text,
-        howto: howtoTextController.text,
+        health: mealState.toString(),
+        howto: '',
         person: personTextController.text,
         place: placeTextController.text,
-        rating: ratingTextController.text,
+        rating: stars.toString(),
         calories: caloriesTextController.text,
         opinion: opinionTextController.text,
         photo: base64String,
@@ -97,7 +121,7 @@ class MealProvider with ChangeNotifier {
   insertWater(context) async{
     final mood = Provider.of<MoodProvider>(context, listen: false);
     final water = WaterModel(
-        type: waterTypeTextController.text,
+        type: waterType,
         quantity: waterQuantityTextController.text,
         time: DateTime.now(),
     );
@@ -108,13 +132,10 @@ class MealProvider with ChangeNotifier {
 
   void cleanData(){
     mealTextController.clear();
-    healthTextController.clear();
-    howtoTextController.clear();
     personTextController.clear();
     placeTextController.clear();
     caloriesTextController.clear();
     opinionTextController.clear();
-    waterTypeTextController.clear();
     waterQuantityTextController.clear();
     stars = 0.0;
     fileName = '';

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+ import 'package:flutter/material.dart';
 import 'package:mood/constants.dart';
 import 'package:mood/providers/mood_provider.dart';
 import 'package:provider/provider.dart';
@@ -18,6 +18,7 @@ class AddWaterScreen extends StatelessWidget {
               child: SingleChildScrollView(
                 child: Container(
                   width: size.width,
+                  height: size.height,
                   decoration: BoxDecoration(
                       gradient: LinearGradient(
                           colors: [
@@ -39,12 +40,65 @@ class AddWaterScreen extends StatelessWidget {
                             )
                           ],
                         ),
-                        const SizedBox(height: 40,),
-                        TextFormField(
-                          controller: data.waterTypeTextController,
-                          cursorColor: kWhite,
-                          decoration: textFieldDecoration.copyWith(
-                              label: const Text('type', style: TextStyle(color: kWhite),)),
+                        const SizedBox(height: 12,),
+                        Wrap(
+                          spacing: 30,
+                          runSpacing: 12,
+                          children: List.generate(8, ((i){
+                            return GestureDetector(
+                              onTap: () => data.updateWaterType(data.waterIcons[i]),
+                              child: Container(
+                                width: size.height * 0.07,
+                                height: size.height * 0.07,
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                        width: 1,
+                                        color: data.waterType == data.waterIcons[i]
+                                            ? kOrange.withOpacity(0.3)
+                                            : kBlack.withOpacity(0.5)),
+                                    gradient: const LinearGradient(
+                                        colors: [
+                                          kGrey,
+                                          kWhite
+                                        ],
+                                        begin: Alignment.bottomCenter,
+                                        end: Alignment.topCenter
+                                    ),
+                                    borderRadius: const BorderRadius.all(Radius.circular(8))
+                                ),
+                                child: Container(
+                                  width: size.height * 0.06,
+                                  height: size.height * 0.06,
+                                  padding: const EdgeInsets.all(8),
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                          color: data.waterType == data.waterIcons[i]
+                                              ? kOrange.withOpacity(0.5) : kWhite,
+                                          width: 1),
+                                      boxShadow: [
+                                        BoxShadow(
+                                            color: kBlack.withOpacity(0.2),
+                                            spreadRadius: 2,
+                                            blurRadius: 2,
+                                            offset: const Offset(0, 2)
+                                        )
+                                      ],
+                                      gradient: const LinearGradient(
+                                          colors: [
+                                            kGrey,
+                                            kWhite
+                                          ],
+                                          begin: Alignment.topCenter,
+                                          end: Alignment.bottomCenter
+                                      ),
+                                      borderRadius: const BorderRadius.all(Radius.circular(100))
+                                  ),
+                                  child: Image.asset('assets/icons/${data.waterIcons[i]}.png'),
+                                ),
+                              ),
+                            );
+                          })),
                         ),
                         const SizedBox(height: 20,),
                         TextField(

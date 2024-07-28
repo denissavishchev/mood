@@ -3,17 +3,30 @@ import 'package:mood/providers/mood_provider.dart';
 import 'package:provider/provider.dart';
 import '../constants.dart';
 
-class MoodSwitchWidget extends StatelessWidget {
-  const MoodSwitchWidget({
+class SwitchWidget extends StatelessWidget {
+  const SwitchWidget({
     super.key,
+    required this.state,
+    required this.textOne,
+    required this.textTwo,
+    required this.textThree,
+    required this.textFour,
+    required this.onTap,
   });
+
+  final bool state;
+  final String textOne;
+  final String textTwo;
+  final String textThree;
+  final String textFour;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     return Consumer<MoodProvider>(
         builder: (context, data, _){
           return GestureDetector(
-            onTap: () => data.switchMood(),
+            onTap: onTap,
             child: Container(
               width: 200,
               height: 50,
@@ -27,25 +40,25 @@ class MoodSwitchWidget extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 18),
                     child: AnimatedAlign(
-                        alignment: data.moodState ? Alignment.centerRight : Alignment.centerLeft,
+                        alignment: state ? Alignment.centerRight : Alignment.centerLeft,
                         duration: const Duration(milliseconds: 200),
-                      child: Text(data.moodState ? 'is good' : 'Mood', style: kBigTextStyle,),
+                      child: Text(state ? textOne : textTwo, style: kBigTextStyle,),
                     ),
                   ),
                   AnimatedAlign(
-                    alignment: data.moodState ? Alignment.centerLeft : Alignment.centerRight,
+                    alignment: state ? Alignment.centerLeft : Alignment.centerRight,
                     duration: const Duration(milliseconds: 200),
                     child: Container(
                       width: 100,
                       height: 44,
                       decoration: BoxDecoration(
-                          color: data.moodState
+                          color: state
                               ? kOrange.withOpacity(0.3)
                               : kBlue.withOpacity(0.3),
                           borderRadius: const BorderRadius.all(Radius.circular(12))
                       ),
                       child: Center(
-                        child: Text(data.moodState ? 'Mood' : 'is bad', style: kBigTextStyle,),
+                        child: Text(state ? textThree : textFour, style: kBigTextStyle,),
                       ),
                     ),
                   ),

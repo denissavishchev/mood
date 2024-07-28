@@ -19,7 +19,7 @@ class WaterListWidget extends StatelessWidget {
         builder: (context, data, _){
           return Container(
             height: size.height * 0.6,
-            width: size.width * 0.2,
+            width: size.width * 0.25,
             clipBehavior: Clip.hardEdge,
             decoration: const BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(4))
@@ -50,7 +50,7 @@ class WaterListWidget extends StatelessWidget {
                         value: data.water),
                     SizedBox(
                       height: size.height * 0.6,
-                      width: size.width * 0.15,
+                      width: size.width * 0.2,
                       child: ListView.builder(
                           itemCount: snapshot.data?[1].length,
                           padding: const EdgeInsets.symmetric(vertical: 4),

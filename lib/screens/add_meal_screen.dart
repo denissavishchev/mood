@@ -2,8 +2,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:mood/constants.dart';
 import 'package:mood/providers/mood_provider.dart';
+import 'package:mood/widgets/switch_widget.dart';
 import 'package:provider/provider.dart';
 import '../providers/meal_provider.dart';
+import '../widgets/rating_bar_widget.dart';
 
 class AddMealScreen extends StatelessWidget {
   const AddMealScreen({super.key});
@@ -22,8 +24,12 @@ class AddMealScreen extends StatelessWidget {
                   decoration: BoxDecoration(
                       gradient: LinearGradient(
                           colors: [
-                            kNavy.withOpacity(0.7),
-                            kBlue.withOpacity(0.7)
+                            data.mealState
+                                ? kYellow.withOpacity(0.7)
+                                : kNavy.withOpacity(0.7),
+                            data.mealState
+                                ? kOrange.withOpacity(0.7)
+                                : kBlue.withOpacity(0.7)
                           ]
                       )
                   ),
@@ -41,26 +47,20 @@ class AddMealScreen extends StatelessWidget {
                           ],
                         ),
                         const SizedBox(height: 12,),
-                        const SizedBox(height: 40,),
+                        SwitchWidget(
+                            onTap: () => data.switchMeal(),
+                            state: data.mealState,
+                            textOne: '',
+                            textTwo: '',
+                            textThree: 'Health',
+                            textFour: 'Junk'
+                        ),
+                        const SizedBox(height: 20,),
                         TextFormField(
                           controller: data.mealTextController,
                           cursorColor: kWhite,
                           decoration: textFieldDecoration.copyWith(
                               label: const Text('meal', style: TextStyle(color: kWhite),)),
-                        ),
-                        const SizedBox(height: 20,),
-                        TextField(
-                          controller: data.healthTextController,
-                          cursorColor: kWhite,
-                          decoration: textFieldDecoration.copyWith(
-                              label: const Text('health', style: TextStyle(color: kWhite),)),
-                        ),
-                        const SizedBox(height: 20,),
-                        TextField(
-                            controller: data.howtoTextController,
-                            cursorColor: kWhite,
-                            decoration: textFieldDecoration.copyWith(
-                                label: const Text('to', style: TextStyle(color: kWhite),))
                         ),
                         const SizedBox(height: 20,),
                         TextField(
@@ -78,13 +78,6 @@ class AddMealScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 20,),
                         TextField(
-                          controller: data.ratingTextController,
-                          cursorColor: kWhite,
-                          decoration: textFieldDecoration.copyWith(
-                              label: const Text('rating', style: TextStyle(color: kWhite),)),
-                        ),
-                        const SizedBox(height: 20,),
-                        TextField(
                           controller: data.caloriesTextController,
                           cursorColor: kWhite,
                           decoration: textFieldDecoration.copyWith(
@@ -96,6 +89,10 @@ class AddMealScreen extends StatelessWidget {
                           cursorColor: kWhite,
                           decoration: textFieldDecoration.copyWith(
                               label: const Text('opinion', style: TextStyle(color: kWhite),)),
+                        ),
+                        const SizedBox(height: 20,),
+                        RatingBarWidget(
+                          state: data.mealState,
                         ),
                         const SizedBox(height: 20,),
                         GestureDetector(

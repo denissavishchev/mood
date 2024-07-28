@@ -2,9 +2,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:mood/constants.dart';
 import 'package:mood/providers/mood_provider.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
-import '../widgets/mood_switch_widget.dart';
+import '../widgets/rating_bar_widget.dart';
+import '../widgets/switch_widget.dart';
 
 class AddMoodScreen extends StatelessWidget {
   const AddMoodScreen({super.key});
@@ -48,7 +48,14 @@ class AddMoodScreen extends StatelessWidget {
                           ],
                         ),
                         const SizedBox(height: 12,),
-                        const MoodSwitchWidget(),
+                        SwitchWidget(
+                            onTap: () => data.switchMood(),
+                            state: data.moodState,
+                            textOne: 'is good',
+                            textTwo: 'Mood',
+                            textThree: 'Mood',
+                            textFour: 'is bad',
+                        ),
                         const SizedBox(height: 40,),
                         TextFormField(
                           controller: data.actionTextController,
@@ -78,39 +85,8 @@ class AddMoodScreen extends StatelessWidget {
                               label: const Text('description', style: TextStyle(color: kWhite),)),
                         ),
                         const SizedBox(height: 20,),
-                        RatingBar(
-                          initialRating: 0,
-                          allowHalfRating: false,
-                          itemCount: 5,
-                          itemSize: 60,
-                          ratingWidget: RatingWidget(
-                            full: Icon(Icons.star,
-                                color: data.moodState
-                                    ? kBlue.withOpacity(0.3)
-                                    : kOrange.withOpacity(0.3),
-                                shadows: const [
-                                  BoxShadow(
-                                      color: kWhite,
-                                      blurRadius: 9,
-                                      spreadRadius: 6,
-                                      offset: Offset(0.5, 0.5)
-                                  )
-                                ]),
-                            empty: Icon(Icons.star_border,
-                                color: data.moodState
-                                    ? kBlue.withOpacity(0.3)
-                                    : kOrange.withOpacity(0.3),
-                                shadows: const [
-                                  BoxShadow(
-                                      color: kWhite,
-                                      blurRadius: 9,
-                                      spreadRadius: 6,
-                                      offset: Offset(0.5, 0.5)
-                                  )
-                                ]), half: const SizedBox.shrink(),
-                          ),
-                          itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
-                          onRatingUpdate: (rating) => data.updateRating(rating),
+                        RatingBarWidget(
+                          state: data.moodState,
                         ),
                         const SizedBox(height: 40,),
                         GestureDetector(
@@ -145,4 +121,6 @@ class AddMoodScreen extends StatelessWidget {
     );
   }
 }
+
+
 

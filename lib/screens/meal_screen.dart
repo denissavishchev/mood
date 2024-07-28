@@ -18,84 +18,87 @@ class MealScreen extends StatelessWidget {
     Size size = MediaQuery.sizeOf(context);
     return Consumer<MealProvider>(builder: (context, data, _) {
       return Scaffold(
+        resizeToAvoidBottomInset: true,
         backgroundColor: kGrey,
-        body: Column(
-          children: [
-            const Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                MealListWidget(),
-                WaterListWidget()
-              ],
-            ),
-            const SizedBox(height: 50,),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Visibility(
-                    visible: data.dates.isNotEmpty,
-                    child: SizedBox(
-                      width: size.width * 0.4,
-                      child: Row(
-                        children: [
-                          ButtonWidget(
-                            icon: Icons.calendar_month,
-                            onTap: () => data.showHistory(context),
-                          ),
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          Text(data.selectedDate?.day == DateTime.now().day
-                              ? 'Today'
-                              : DateFormat('y-MM-d').format(DateTime.parse(
-                                  data.selectedDate.toString()))),
-                        ],
-                      ),
-                    )),
-                FutureBuilder(
-                    future: MealDatabaseHelper.getMealData(),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(child: CircularProgressIndicator());
-                      }
-                      return Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          AbsorbPointer(
-                            absorbing: !data.isToday(
-                                data.selectedDate.toString(),
-                                DateTime.now().toString()),
-                            child: ButtonWidget(
-                              icon: Icons.fastfood,
-                              onTap: () => Navigator.pushReplacement(context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                    const AddMealScreen())),
-
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  MealListWidget(),
+                  WaterListWidget()
+                ],
+              ),
+              const SizedBox(height: 50,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Visibility(
+                      visible: data.dates.isNotEmpty,
+                      child: SizedBox(
+                        width: size.width * 0.4,
+                        child: Row(
+                          children: [
+                            ButtonWidget(
+                              icon: Icons.calendar_month,
+                              onTap: () => data.showHistory(context),
                             ),
-                          ),
-                          const SizedBox(width: 50,),
-                          AbsorbPointer(
-                            absorbing: !data.isToday(
-                                data.selectedDate.toString(),
-                                DateTime.now().toString()),
-                            child: ButtonWidget(
-                              icon: Icons.water_drop,
-                              onTap: () => Navigator.pushReplacement(context,
+                            const SizedBox(
+                              width: 20,
+                            ),
+                            Text(data.selectedDate?.day == DateTime.now().day
+                                ? 'Today'
+                                : DateFormat('y-MM-d').format(DateTime.parse(
+                                    data.selectedDate.toString()))),
+                          ],
+                        ),
+                      )),
+                  FutureBuilder(
+                      future: MealDatabaseHelper.getMealData(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return const Center(child: CircularProgressIndicator());
+                        }
+                        return Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            AbsorbPointer(
+                              absorbing: !data.isToday(
+                                  data.selectedDate.toString(),
+                                  DateTime.now().toString()),
+                              child: ButtonWidget(
+                                icon: Icons.fastfood,
+                                onTap: () => Navigator.pushReplacement(context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                      const AddWaterScreen())),
+                                      const AddMealScreen())),
+          
+                              ),
                             ),
-                          ),
-                        ],
-                      );
-                    })
-              ],
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-          ],
+                            const SizedBox(width: 50,),
+                            AbsorbPointer(
+                              absorbing: !data.isToday(
+                                  data.selectedDate.toString(),
+                                  DateTime.now().toString()),
+                              child: ButtonWidget(
+                                icon: Icons.water_drop,
+                                onTap: () => Navigator.pushReplacement(context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                        const AddWaterScreen())),
+                              ),
+                            ),
+                          ],
+                        );
+                      })
+                ],
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+            ],
+          ),
         ),
       );
     });
