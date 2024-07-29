@@ -87,6 +87,7 @@ class AddMoodScreen extends StatelessWidget {
                         const SizedBox(height: 20,),
                         RatingBarWidget(
                           state: data.moodState,
+                          provider: 'mood',
                         ),
                         const SizedBox(height: 40,),
                         GestureDetector(

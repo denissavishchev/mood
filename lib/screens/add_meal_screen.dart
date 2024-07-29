@@ -93,6 +93,7 @@ class AddMealScreen extends StatelessWidget {
                         const SizedBox(height: 20,),
                         RatingBarWidget(
                           state: data.mealState,
+                          provider: 'meal',
                         ),
                         const SizedBox(height: 20,),
                         GestureDetector(
