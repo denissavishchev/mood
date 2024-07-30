@@ -33,4 +33,17 @@ class MoodModel{
       'time': time.toString(),
     };
   }
+
+  factory MoodModel.fromJson(Map<String, dynamic> json) {
+    return MoodModel(
+      mood: json['mood'],
+      action: json['action'],
+      person: json['person'],
+      place: json['place'],
+      rating: json['rating'],
+      description: json['description'],
+      photo: json['photo'],
+      time: json['time'],
+    );
+  }
 }

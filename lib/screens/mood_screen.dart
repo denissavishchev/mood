@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:mood/constants.dart';
 import 'package:mood/screens/add_mood_screen.dart';
+import 'package:mood/screens/mood_statistic_screen.dart';
 import 'package:provider/provider.dart';
 import '../models/mood_database_helper.dart';
 import '../providers/mood_provider.dart';
@@ -30,22 +31,31 @@ class MoodScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           const Spacer(),
-                          Visibility(
-                            visible: data.dates.isNotEmpty,
-                              child: SizedBox(
-                                width: size.width * 0.4,
-                                child: Row(
-                                  children: [
-                                    ButtonWidget(
-                                      icon: Icons.calendar_month,
-                                      onTap: () => data.showHistory(context),),
-                                    const SizedBox(width: 20,),
-                                    Text(data.selectedDate?.day == DateTime.now().day
-                                        ? 'Today'
-                                        : DateFormat('y-MM-d').format(DateTime.parse(data.selectedDate.toString()))),
-                                  ],
-                                ),
-                              )),
+                          Column(
+                            children: [
+                              IconButton(
+                                onPressed: () => Navigator.pushReplacement(context,
+                                    MaterialPageRoute(builder: (context) =>
+                                    const MoodStatisticScreen())),
+                                icon: const Icon(Icons.stacked_bar_chart),),
+                              Visibility(
+                                visible: data.dates.isNotEmpty,
+                                  child: SizedBox(
+                                    width: size.width * 0.4,
+                                    child: Row(
+                                      children: [
+                                        ButtonWidget(
+                                          icon: Icons.calendar_month,
+                                          onTap: () => data.showHistory(context),),
+                                        const SizedBox(width: 20,),
+                                        Text(data.selectedDate?.day == DateTime.now().day
+                                            ? 'Today'
+                                            : DateFormat('y-MM-d').format(DateTime.parse(data.selectedDate.toString()))),
+                                      ],
+                                    ),
+                                  )),
+                            ],
+                          ),
                           const Spacer(),
                           FutureBuilder(
                               future: MoodDatabaseHelper.getData(),
