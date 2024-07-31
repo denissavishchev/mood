@@ -27,6 +27,7 @@ class MoodProvider with ChangeNotifier {
   List<MoodModel> dates = [];
   DateTime? selectedDate = DateTime.now();
   int currentPageIndex = 0;
+  List<List> mergedList = [];
 
   List<IconData> pageIcons = [
     Icons.mood,
@@ -34,6 +35,34 @@ class MoodProvider with ChangeNotifier {
     Icons.animation,
     Icons.settings
   ];
+
+  void calculateStatistic(List<MoodModel> moods){
+    final trueResult = <String, List<double>>{};
+    final falseResult = <String, List<double>>{};
+    for (final list in moods) {
+      final date = list.time;
+      final isTrue = bool.parse(list.mood);
+      final value = double.parse(list.rating);
+      if (isTrue) {
+        trueResult.update(DateFormat('y-MM-d').format(date),
+                (values) => values..add(value),
+            ifAbsent: () => [value]);
+      } else {
+        falseResult.update(DateFormat('y-MM-d').format(date),
+                (values) => values..add(value),
+            ifAbsent: () => [value]);
+      }
+    }
+    final trueList = trueResult.entries.map((e) {
+      final average = e.value.reduce((a, b) => a + b) / e.value.length;
+      return [e.key, true, average];
+    }).toList();
+    final falseList = falseResult.entries.map((e) {
+      final average = e.value.reduce((a, b) => a + b) / e.value.length;
+      return [e.key, false, average];
+    }).toList();
+    mergedList = [...trueList, ...falseList];
+  }
 
   void switchPage(int index){
     currentPageIndex = index;

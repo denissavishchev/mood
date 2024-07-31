@@ -1,7 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:mood/models/mood_database_helper.dart';
-import 'package:mood/models/mood_model.dart';
 import 'package:mood/providers/mood_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -29,26 +28,21 @@ class MoodStatisticScreen extends StatelessWidget {
                       return const Center(child: CircularProgressIndicator());
                     }
                     final moods = snapshot.data!;
-                    final map = {};
-                    for(final i in moods){
-                      map.addAll({i.time:i.rating});
-                    }
-                    final result = <String, double>{};
-                    map.forEach((date, value) {
-                      result.update(DateFormat('y-MM-d').format(DateTime.parse(date.toString())),
-                              (sum) => sum + double.parse(value.toString()), ifAbsent: () => double.parse(value.toString()));
-                    });
-                    print(result);
+                    data.calculateStatistic(moods);
                     return SfCartesianChart(
+                      enableSideBySideSeriesPlacement: false,
+                      // margin: EdgeInsets.all(12),
                       primaryXAxis: DateTimeAxis(
+                        intervalType: DateTimeIntervalType.auto,
                         dateFormat: DateFormat('d MMM'),
                         labelRotation: 90,
                         labelStyle: const TextStyle(color: kOrange),
                         minimum: DateTime.now(),
-                        maximum: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day - 5),
+                        maximum: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day - 10),
                         majorGridLines: const MajorGridLines(width: 0,),
                       ),
                       primaryYAxis: const NumericAxis(
+                          rangePadding: ChartRangePadding.round,
                         labelStyle: TextStyle(color: kOrange),
                         placeLabelsNearAxisLine: true,
                         minimum: 0,
@@ -56,30 +50,32 @@ class MoodStatisticScreen extends StatelessWidget {
                         majorGridLines: MajorGridLines(width: 0,),
                       ),
                       series: <CartesianSeries>[
-                        ColumnSeries<MoodModel, DateTime>(
-                          dataSource: moods,
-                          xValueMapper: (MoodModel data, _) => data.time,
-                          yValueMapper: (MoodModel data, _) => data.mood == 'true' ? double.parse(data.rating) : 0,
+                        ColumnSeries<List, DateTime>(
+                          animationDuration: 500,
+                          dataSource: data.mergedList,
+                          xValueMapper: (List data, _) => DateTime.parse(data[0]),
+                          yValueMapper: (List data, _) => data[1] == true ? data[2] : 0,
+                          color: kOrange,
+                          borderRadius: const BorderRadius.vertical(top: Radius.circular(8)),
                           // dataLabelSettings: const DataLabelSettings(
                           //   isVisible: true,
                           //   textStyle: TextStyle(color: kWhite, fontWeight: FontWeight.bold),
                           //   margin: EdgeInsets.symmetric(vertical: 2, horizontal: 4),
                           //   borderColor: kOrange,
-                          borderWidth: 10,
-                          //   color: kOrange,
                           //   opacity: 0.8,
                           // ),
-                          borderColor: kOrange.withOpacity(0.5),
+                          spacing: 0,
                           // width: 1,
                           // borderWidth: 5,
-                          color: kBlue,
                         ),
-                        ColumnSeries<MoodModel, DateTime>(
-                          dataSource: moods,
-                          xValueMapper: (MoodModel data, _) => data.time,
-                          yValueMapper: (MoodModel data, _) => data.mood == 'false' ? double.parse(data.rating) : 0,
-                          borderWidth: 5,
-                          borderColor: kBlue,
+                        ColumnSeries<List, DateTime>(
+                          animationDuration: 500,
+                          dataSource: data.mergedList,
+                          xValueMapper: (List data, _) => DateTime.parse(data[0]),
+                          yValueMapper: (List data, _) => data[1] == false ? data[2] : 0,
+                          width: 0.4,
+                          color: kBlue,
+                          borderRadius: const BorderRadius.vertical(top: Radius.circular(4))
                         ),
                       ],
                     );
