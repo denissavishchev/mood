@@ -58,7 +58,7 @@ class MoodScreen extends StatelessWidget {
                           ),
                           const Spacer(),
                           FutureBuilder(
-                              future: MoodDatabaseHelper.getData(),
+                              future: MoodDatabaseHelper.getTimeData(),
                               builder: (context, snapshot){
                                 if(snapshot.connectionState == ConnectionState.waiting){
                                   return const Center(child: CircularProgressIndicator());

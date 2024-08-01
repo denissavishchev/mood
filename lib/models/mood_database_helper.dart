@@ -31,6 +31,26 @@ class MoodDatabaseHelper {
     return await db.insert('moods', mood.toMap());
   }
 
+  static Future<List<MoodModel>> getTimeData()async {
+    final db = await _openDatabase();
+    List<Map<String, dynamic>> moods = await db.rawQuery(
+        'SELECT id, mood, rating, time FROM moods'
+    );
+    return List.generate(moods.length, (i){
+      return MoodModel(
+          id: moods[i]['id'],
+          mood: moods[i]['mood'],
+          action: '',
+          person: '',
+          place: '',
+          rating: moods[i]['rating'],
+          description: '',
+          photo: '',
+          time: DateTime.parse(moods[i]['time'])
+      );
+    });
+  }
+
   static Future<List<MoodModel>> getData()async {
     final db = await _openDatabase();
     final List<Map<String, dynamic>> moods = await db.query('moods');

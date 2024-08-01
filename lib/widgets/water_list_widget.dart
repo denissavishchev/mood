@@ -46,8 +46,10 @@ class WaterListWidget extends StatelessWidget {
                 return Row(
                   children: [
                     BarWidget(
-                        color: kNavy,
-                        value: data.water),
+                      color: kNavy,
+                      value: data.water,
+                      maxValue: data.maxWater,
+                    ),
                     SizedBox(
                       height: size.height * 0.6,
                       width: size.width * 0.2,

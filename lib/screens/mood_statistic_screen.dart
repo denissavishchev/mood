@@ -22,7 +22,7 @@ class MoodStatisticScreen extends StatelessWidget {
                     icon: const Icon(Icons.arrow_back_ios_new, color: kBlack,)
                 ),
                 FutureBuilder(
-                  future: MoodDatabaseHelper.getData(),
+                  future: MoodDatabaseHelper.getTimeData(),
                   builder: (context, snapshot){
                     if(snapshot.connectionState == ConnectionState.waiting){
                       return const Center(child: CircularProgressIndicator());

@@ -6,6 +6,7 @@ import 'package:mood/models/mood_model.dart';
 import 'package:mood/screens/meal_screen.dart';
 import 'package:mood/screens/main_screen.dart';
 import 'package:mood/screens/mood_screen.dart';
+import 'package:mood/screens/settings_screen.dart';
 import '../constants.dart';
 import '../models/mood_database_helper.dart';
 import 'package:image_picker/image_picker.dart';
@@ -61,7 +62,6 @@ class MoodProvider with ChangeNotifier {
       return [e.key, false, average];
     }).toList();
     mergedList = [...trueList, ...falseList];
-    print(mergedList.reversed);
   }
 
   void switchPage(int index){
@@ -78,7 +78,7 @@ class MoodProvider with ChangeNotifier {
       case 2:
         return const Text('Sleep');
       case 3:
-        return const Text('Settings');
+        return const SettingsScreen();
     }
     return const MoodScreen();
   }

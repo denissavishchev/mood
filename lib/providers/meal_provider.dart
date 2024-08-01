@@ -5,6 +5,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constants.dart';
 import '../models/meal_database_helper.dart';
@@ -20,6 +21,8 @@ class MealProvider with ChangeNotifier {
   final caloriesTextController = TextEditingController();
   final opinionTextController = TextEditingController();
   final waterQuantityTextController = TextEditingController();
+  final maxCaloriesController = TextEditingController();
+  final maxWaterController = TextEditingController();
 
   late XFile? file;
   String fileName = '';
@@ -32,6 +35,8 @@ class MealProvider with ChangeNotifier {
   double water = 0.0;
   bool mealState = true;
   String waterType = 'water';
+  String maxCalories = '3000';
+  String maxWater = '3000';
 
   List<String> waterIcons = [
     'water',
@@ -43,6 +48,20 @@ class MealProvider with ChangeNotifier {
     'wine',
     'alcohol',
   ];
+
+  Future saveSettings() async{
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('maxCalories', maxCaloriesController.text);
+    await prefs.setString('maxWater', maxWaterController.text);
+  }
+
+  Future loadSettings() async{
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    maxCalories = prefs.getString('maxCalories') ?? '3000';
+    maxWater = prefs.getString('maxWater') ?? '3000';
+    maxCaloriesController.text = maxCalories;
+    maxWaterController.text = maxWater;
+  }
 
   void updateWaterType(String type){
     waterType = type;

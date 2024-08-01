@@ -10,8 +10,22 @@ import '../widgets/button_widget.dart';
 import 'add_meal_screen.dart';
 import 'add_water_screen.dart';
 
-class MealScreen extends StatelessWidget {
+class MealScreen extends StatefulWidget {
   const MealScreen({super.key});
+
+  @override
+  State<MealScreen> createState() => _MealScreenState();
+}
+
+class _MealScreenState extends State<MealScreen> {
+
+  @override
+  void initState() {
+    final meal = Provider.of<MealProvider>(context, listen: false);
+    meal.loadSettings();
+    super.initState();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +87,7 @@ class MealScreen extends StatelessWidget {
                                   MaterialPageRoute(
                                       builder: (context) =>
                                       const AddMealScreen())),
-          
+
                               ),
                             ),
                             const SizedBox(width: 50,),

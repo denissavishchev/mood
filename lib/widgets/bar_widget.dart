@@ -7,17 +7,19 @@ class BarWidget extends StatelessWidget {
     super.key,
     required this.color,
     required this.value,
+    required this.maxValue,
   });
 
   final Color color;
   final double value;
+  final String maxValue;
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
     return Column(
       children: [
-        Text(value.toStringAsFixed(0), style: TextStyle(fontSize: 14.sp),),
+        Text(maxValue.toString(), style: TextStyle(fontSize: 14.sp, color: color),),
         Container(
           width: size.width * 0.03,
           height: size.height * 0.55,
@@ -26,7 +28,7 @@ class BarWidget extends StatelessWidget {
           ),
           child: FAProgressBar(
             currentValue: value,
-            maxValue: 3000,
+            maxValue: double.parse(maxValue),
             changeColorValue: 2500,
             changeProgressColor: color,
             backgroundColor: Colors.white,
@@ -39,6 +41,7 @@ class BarWidget extends StatelessWidget {
             displayTextStyle: const TextStyle(color: Colors.white),
           ),
         ),
+        Text(value.toStringAsFixed(0), style: TextStyle(fontSize: 14.sp),),
       ],
     );
   }

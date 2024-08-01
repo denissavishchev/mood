@@ -122,7 +122,7 @@ class MealListWidget extends StatelessWidget {
                                     ),
                                     Row(
                                       children: [
-                                        Text('Calories: ', style: kTextStyle,),
+                                        Text('Cals: ', style: kTextStyle,),
                                         Text(meals[index].calories, style: kTextStyle,),
                                       ],
                                     ),
@@ -135,8 +135,10 @@ class MealListWidget extends StatelessWidget {
                       ),
                     ),
                     BarWidget(
-                        color: kOrange,
-                        value: data.calories),
+                      color: kOrange,
+                      value: data.calories,
+                      maxValue: data.maxCalories,
+                    ),
                   ],
                 );
               },
