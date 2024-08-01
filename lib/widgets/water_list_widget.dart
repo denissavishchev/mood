@@ -27,7 +27,7 @@ class WaterListWidget extends StatelessWidget {
             child: FutureBuilder(
               future: Future.wait([
                 MealDatabaseHelper.getWaterData(),
-                MealDatabaseHelper.getSingleWaterData(DateFormat('y-MM-d').format(
+                MealDatabaseHelper.getSingleWaterData(DateFormat('y-MM-dd').format(
                     DateTime.parse(data.selectedDate.toString())))]),
               builder: (context, snapshot){
                 if(snapshot.connectionState == ConnectionState.waiting){

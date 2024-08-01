@@ -44,12 +44,11 @@ class MoodProvider with ChangeNotifier {
       final isTrue = bool.parse(list.mood);
       final value = double.parse(list.rating);
       if (isTrue) {
-        trueResult.update(DateFormat('y-MM-d').format(date),
+        trueResult.update(DateFormat('y-MM-dd').format(date),
                 (values) => values..add(value),
             ifAbsent: () => [value]);
       } else {
-        falseResult.update(DateFormat('y-MM-d').format(date),
-                (values) => values..add(value),
+        falseResult.update(DateFormat('y-MM-dd').format(date), (values) => values..add(value),
             ifAbsent: () => [value]);
       }
     }
@@ -62,6 +61,7 @@ class MoodProvider with ChangeNotifier {
       return [e.key, false, average];
     }).toList();
     mergedList = [...trueList, ...falseList];
+    print(mergedList.reversed);
   }
 
   void switchPage(int index){
@@ -84,8 +84,8 @@ class MoodProvider with ChangeNotifier {
   }
 
   bool isToday(String first, String second){
-    if(DateFormat('y-MM-d').format(DateTime.parse(first)) ==
-        DateFormat('y-MM-d').format(DateTime.parse(second))){
+    if(DateFormat('y-MM-dd').format(DateTime.parse(first)) ==
+        DateFormat('y-MM-dd').format(DateTime.parse(second))){
       return true;
     }
     return false;

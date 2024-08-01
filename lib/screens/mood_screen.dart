@@ -50,7 +50,7 @@ class MoodScreen extends StatelessWidget {
                                         const SizedBox(width: 20,),
                                         Text(data.selectedDate?.day == DateTime.now().day
                                             ? 'Today'
-                                            : DateFormat('y-MM-d').format(DateTime.parse(data.selectedDate.toString()))),
+                                            : DateFormat('y-MM-dd').format(DateTime.parse(data.selectedDate.toString()))),
                                       ],
                                     ),
                                   )),

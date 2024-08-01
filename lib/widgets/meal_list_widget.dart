@@ -28,7 +28,7 @@ class MealListWidget extends StatelessWidget {
             child: FutureBuilder(
               future: Future.wait([
                 MealDatabaseHelper.getMealData(),
-                MealDatabaseHelper.getSingleMealData(DateFormat('y-MM-d').format(
+                MealDatabaseHelper.getSingleMealData(DateFormat('y-MM-dd').format(
                     DateTime.parse(data.selectedDate.toString())))]),
               builder: (context, snapshot){
                 if(snapshot.connectionState == ConnectionState.waiting){

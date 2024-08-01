@@ -28,7 +28,7 @@ class MoodsListWidget extends StatelessWidget {
             child: FutureBuilder(
               future: Future.wait([
                 MoodDatabaseHelper.getData(),
-                MoodDatabaseHelper.getSingleData(DateFormat('y-MM-d').format(
+                MoodDatabaseHelper.getSingleData(DateFormat('y-MM-dd').format(
                     DateTime.parse(data.selectedDate.toString())))]),
               builder: (context, snapshot){
                 if(snapshot.connectionState == ConnectionState.waiting){

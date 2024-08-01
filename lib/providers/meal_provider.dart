@@ -60,8 +60,8 @@ class MealProvider with ChangeNotifier {
   }
 
   bool isToday(String first, String second){
-    if(DateFormat('y-MM-d').format(DateTime.parse(first)) ==
-        DateFormat('y-MM-d').format(DateTime.parse(second))){
+    if(DateFormat('y-MM-dd').format(DateTime.parse(first)) ==
+        DateFormat('y-MM-dd').format(DateTime.parse(second))){
       return true;
     }
     return false;

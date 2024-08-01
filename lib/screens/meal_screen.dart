@@ -49,7 +49,7 @@ class MealScreen extends StatelessWidget {
                             ),
                             Text(data.selectedDate?.day == DateTime.now().day
                                 ? 'Today'
-                                : DateFormat('y-MM-d').format(DateTime.parse(
+                                : DateFormat('y-MM-dd').format(DateTime.parse(
                                     data.selectedDate.toString()))),
                           ],
                         ),
