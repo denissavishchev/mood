@@ -51,24 +51,6 @@ class MoodDatabaseHelper {
     });
   }
 
-  static Future<List<MoodModel>> getData()async {
-    final db = await _openDatabase();
-    final List<Map<String, dynamic>> moods = await db.query('moods');
-    return List.generate(moods.length, (i){
-      return MoodModel(
-          id: moods[i]['id'],
-          mood: moods[i]['mood'],
-          action: moods[i]['action'],
-          person: moods[i]['person'],
-          place: moods[i]['place'],
-          rating: moods[i]['rating'],
-          description: moods[i]['description'],
-          photo: '',
-          time: DateTime.parse(moods[i]['time'])
-      );
-    });
-  }
-
   static Future<List<MoodModel>> getSingleData(String day) async{
     final db = await _openDatabase();
     List<Map<String, dynamic>> moods = await db.rawQuery(

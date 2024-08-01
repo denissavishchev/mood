@@ -69,7 +69,7 @@ class _MealScreenState extends State<MealScreen> {
                         ),
                       )),
                   FutureBuilder(
-                      future: MealDatabaseHelper.getMealData(),
+                      future: MealDatabaseHelper.getMealTimeData(),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState == ConnectionState.waiting) {
                           return const Center(child: CircularProgressIndicator());

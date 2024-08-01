@@ -46,20 +46,22 @@ class MealDatabaseHelper {
     return await db.insert('water', water.toMap());
   }
 
-  static Future<List<MealModel>> getMealData()async {
+  static Future<List<MealModel>> getMealTimeData()async {
     final db = await _openDatabase();
-    final List<Map<String, dynamic>> meals = await db.query('meals');
+    List<Map<String, dynamic>> meals = await db.rawQuery(
+        'SELECT id, meal, rating, time FROM meals'
+    );
     return List.generate(meals.length, (i){
       return MealModel(
           id: meals[i]['id'],
-          meal: meals[i]['meal'],
+          meal: '',
           health: meals[i]['meal'],
-          howto: meals[i]['howto'],
-          person: meals[i]['person'],
-          place: meals[i]['place'],
+          howto: '',
+          person: '',
+          place: '',
           rating: meals[i]['rating'],
-          calories: meals[i]['calories'],
-          opinion: meals[i]['opinion'],
+          calories: '',
+          opinion: '',
           photo: '',
           time: DateTime.parse(meals[i]['time'])
       );
