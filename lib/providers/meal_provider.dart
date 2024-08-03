@@ -37,6 +37,8 @@ class MealProvider with ChangeNotifier {
   String waterType = 'water';
   String maxCalories = '3000';
   String maxWater = '3000';
+  List<List<Object>> mealList = [];
+  List<List<Object>> waterList = [];
 
   List<String> waterIcons = [
     'water',
@@ -48,6 +50,33 @@ class MealProvider with ChangeNotifier {
     'wine',
     'alcohol',
   ];
+
+  void calculateStatistic(List meal, List water){
+    final mealResult = <String, List<double>>{};
+    final waterResult = <String, List<double>>{};
+    for (final list in meal) {
+      final mealDate = list.time;
+      final mealValue = double.parse(list.calories);
+        mealResult.update(DateFormat('y-MM-dd').format(mealDate),
+                (values) => values..add(mealValue),
+            ifAbsent: () => [mealValue]);
+    }
+    for (final list in water) {
+      final waterDate = list.time;
+      final waterValue = double.parse(list.quantity);
+      waterResult.update(DateFormat('y-MM-dd').format(waterDate),
+              (values) => values..add(waterValue),
+          ifAbsent: () => [waterValue]);
+    }
+    mealList = mealResult.entries.map((e) {
+      final sum = e.value.reduce((a, b) => a + b);
+      return [e.key, sum];
+    }).toList();
+    waterList = waterResult.entries.map((e) {
+      final sum = e.value.reduce((a, b) => a + b);
+      return [e.key, sum];
+    }).toList();
+  }
 
   Future saveSettings() async{
     final SharedPreferences prefs = await SharedPreferences.getInstance();

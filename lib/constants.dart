@@ -17,6 +17,13 @@ final kTextStyle = TextStyle(
   // fontFamily: 'Roboto'
 );
 
+final kBlackTextStyle = TextStyle(
+  color: kBlack,
+  fontWeight: FontWeight.bold,
+  fontSize: 24.sp,
+  // fontFamily: 'Roboto'
+);
+
 final kBigTextStyle = TextStyle(
   color: kWhite,
   fontWeight: FontWeight.bold,

@@ -49,7 +49,7 @@ class MealDatabaseHelper {
   static Future<List<MealModel>> getMealTimeData()async {
     final db = await _openDatabase();
     List<Map<String, dynamic>> meals = await db.rawQuery(
-        'SELECT id, meal, rating, time FROM meals'
+        'SELECT id, meal, rating, calories, time FROM meals'
     );
     return List.generate(meals.length, (i){
       return MealModel(
@@ -60,7 +60,7 @@ class MealDatabaseHelper {
           person: '',
           place: '',
           rating: meals[i]['rating'],
-          calories: '',
+          calories: meals[i]['calories'],
           opinion: '',
           photo: '',
           time: DateTime.parse(meals[i]['time'])

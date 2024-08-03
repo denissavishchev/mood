@@ -9,6 +9,7 @@ import '../widgets/meal_list_widget.dart';
 import '../widgets/button_widget.dart';
 import 'add_meal_screen.dart';
 import 'add_water_screen.dart';
+import 'meal_statistic_screen.dart';
 
 class MealScreen extends StatefulWidget {
   const MealScreen({super.key});
@@ -45,67 +46,81 @@ class _MealScreenState extends State<MealScreen> {
                 ],
               ),
               const SizedBox(height: 50,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Visibility(
-                      visible: data.dates.isNotEmpty,
-                      child: SizedBox(
-                        width: size.width * 0.4,
-                        child: Row(
-                          children: [
-                            ButtonWidget(
-                              icon: Icons.calendar_month,
-                              onTap: () => data.showHistory(context),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                    child: ButtonWidget(
+                        icon: Icons.stacked_bar_chart,
+                        onTap: () => Navigator.pushReplacement(context,
+                            MaterialPageRoute(builder: (context) =>
+                            const MealStatisticScreen()))
+                    ),
+                  ),
+                  const SizedBox(height: 8,),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Visibility(
+                          visible: data.dates.isNotEmpty,
+                          child: SizedBox(
+                            width: size.width * 0.4,
+                            child: Row(
+                              children: [
+                                ButtonWidget(
+                                  icon: Icons.calendar_month,
+                                  onTap: () => data.showHistory(context),
+                                ),
+                                const SizedBox(width: 20),
+                                Text(data.selectedDate?.day == DateTime.now().day
+                                    ? 'Today'
+                                    : DateFormat('y-MM-dd').format(DateTime.parse(
+                                        data.selectedDate.toString())),
+                                style: kBlackTextStyle,),
+                              ],
                             ),
-                            const SizedBox(
-                              width: 20,
-                            ),
-                            Text(data.selectedDate?.day == DateTime.now().day
-                                ? 'Today'
-                                : DateFormat('y-MM-dd').format(DateTime.parse(
-                                    data.selectedDate.toString()))),
-                          ],
-                        ),
-                      )),
-                  FutureBuilder(
-                      future: MealDatabaseHelper.getMealTimeData(),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.waiting) {
-                          return const Center(child: CircularProgressIndicator());
-                        }
-                        return Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            AbsorbPointer(
-                              absorbing: !data.isToday(
-                                  data.selectedDate.toString(),
-                                  DateTime.now().toString()),
-                              child: ButtonWidget(
-                                icon: Icons.fastfood,
-                                onTap: () => Navigator.pushReplacement(context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                      const AddMealScreen())),
+                          )),
+                      FutureBuilder(
+                          future: MealDatabaseHelper.getMealTimeData(),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState == ConnectionState.waiting) {
+                              return const Center(child: CircularProgressIndicator());
+                            }
+                            return Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                AbsorbPointer(
+                                  absorbing: !data.isToday(
+                                      data.selectedDate.toString(),
+                                      DateTime.now().toString()),
+                                  child: ButtonWidget(
+                                    icon: Icons.fastfood,
+                                    onTap: () => Navigator.pushReplacement(context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                          const AddMealScreen())),
 
-                              ),
-                            ),
-                            const SizedBox(width: 50,),
-                            AbsorbPointer(
-                              absorbing: !data.isToday(
-                                  data.selectedDate.toString(),
-                                  DateTime.now().toString()),
-                              child: ButtonWidget(
-                                icon: Icons.water_drop,
-                                onTap: () => Navigator.pushReplacement(context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                        const AddWaterScreen())),
-                              ),
-                            ),
-                          ],
-                        );
-                      })
+                                  ),
+                                ),
+                                const SizedBox(width: 50,),
+                                AbsorbPointer(
+                                  absorbing: !data.isToday(
+                                      data.selectedDate.toString(),
+                                      DateTime.now().toString()),
+                                  child: ButtonWidget(
+                                    icon: Icons.water_drop,
+                                    onTap: () => Navigator.pushReplacement(context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                            const AddWaterScreen())),
+                                  ),
+                                ),
+                              ],
+                            );
+                          })
+                    ],
+                  ),
                 ],
               ),
               const SizedBox(
