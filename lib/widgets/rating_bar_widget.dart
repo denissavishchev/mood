@@ -26,9 +26,7 @@ class RatingBarWidget extends StatelessWidget {
             itemSize: 60,
             ratingWidget: RatingWidget(
               full: Icon(Icons.star,
-                  color: state
-                      ? kBlue.withOpacity(0.3)
-                      : kOrange.withOpacity(0.3),
+                  color: kBlueGrey.withOpacity(0.3),
                   shadows: const [
                     BoxShadow(
                         color: kWhite,
@@ -38,9 +36,7 @@ class RatingBarWidget extends StatelessWidget {
                     )
                   ]),
               empty: Icon(Icons.star_border,
-                  color: state
-                      ? kBlue.withOpacity(0.3)
-                      : kOrange.withOpacity(0.3),
+                  color: kBlueGrey.withOpacity(0.3),
                   shadows: const [
                     BoxShadow(
                         color: kWhite,

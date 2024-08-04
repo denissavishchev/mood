@@ -77,7 +77,7 @@ class WaterListWidget extends StatelessWidget {
                                             ? kNavy.withOpacity(0.7)
                                             : kYellow.withOpacity(0.7),
                                         water[index].type == 'water'
-                                            ? kBlue.withOpacity(0.7)
+                                            ? kBlueGrey.withOpacity(0.7)
                                             : kOrange.withOpacity(0.7)
                                       ],
                                     ),

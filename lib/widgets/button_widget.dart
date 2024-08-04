@@ -57,7 +57,7 @@ class ButtonWidget extends StatelessWidget {
               ),
               borderRadius: const BorderRadius.all(Radius.circular(100))
           ),
-          child: Icon(icon, color: kBlue,
+          child: Icon(icon, color: kBlueGrey,
           ),
         ),
       ),

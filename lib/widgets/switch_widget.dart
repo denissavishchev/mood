@@ -54,7 +54,7 @@ class SwitchWidget extends StatelessWidget {
                       decoration: BoxDecoration(
                           color: state
                               ? kOrange.withOpacity(0.3)
-                              : kBlue.withOpacity(0.3),
+                              : kBlueGrey.withOpacity(0.3),
                           borderRadius: const BorderRadius.all(Radius.circular(12))
                       ),
                       child: Center(

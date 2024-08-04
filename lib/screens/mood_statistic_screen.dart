@@ -74,7 +74,7 @@ class MoodStatisticScreen extends StatelessWidget {
                           xValueMapper: (List data, _) => DateTime.parse(data[0]),
                           yValueMapper: (List data, _) => data[1] == false ? data[2] : 0,
                           width: 0.4,
-                          color: kBlue,
+                          color: kBlueGrey,
                           borderRadius: const BorderRadius.vertical(top: Radius.circular(4))
                         ),
                       ],

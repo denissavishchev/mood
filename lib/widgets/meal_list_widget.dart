@@ -75,7 +75,7 @@ class MealListWidget extends StatelessWidget {
                                             : kNavy.withOpacity(0.7),
                                         meals[index].health == 'true'
                                             ? kOrange.withOpacity(0.7)
-                                            : kBlue.withOpacity(0.7)
+                                            : kBlueGrey.withOpacity(0.7)
                                       ],
                                     ),
                                     borderRadius: const BorderRadius.all(Radius.circular(4)),
@@ -103,7 +103,7 @@ class MealListWidget extends StatelessWidget {
                                                 spreadRadius: 2,
                                                 blurRadius: 1,
                                                 color: meals[index].health == 'true'
-                                                    ? kOrange.withOpacity(0.3) : kBlue.withOpacity(0.3)
+                                                    ? kOrange.withOpacity(0.3) : kBlueGrey.withOpacity(0.3)
                                             )
                                           ],
                                         ),

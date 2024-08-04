@@ -35,7 +35,7 @@ class StarsWidget extends StatelessWidget {
                       ? Icons.star
                       : Icons.star_border,
                   color: mood == 'true' 
-                      ? kBlue.withOpacity(0.3)
+                      ? kBlueGrey.withOpacity(0.3)
                       : kOrange.withOpacity(0.3),
                   size: 30,
                   shadows: shadow,
@@ -48,7 +48,7 @@ class StarsWidget extends StatelessWidget {
                       ? Icons.star
                       : Icons.star_border,
                   color: mood == 'true'
-                      ? kBlue.withOpacity(0.3)
+                      ? kBlueGrey.withOpacity(0.3)
                       : kOrange.withOpacity(0.3),
                   size: 35,
                   shadows: shadow,
@@ -60,7 +60,7 @@ class StarsWidget extends StatelessWidget {
                       ? Icons.star
                       : Icons.star_border,
                   color: mood == 'true'
-                      ? kBlue.withOpacity(0.3)
+                      ? kBlueGrey.withOpacity(0.3)
                       : kOrange.withOpacity(0.3),
                   size: 40,
                   shadows: shadow,
@@ -73,7 +73,7 @@ class StarsWidget extends StatelessWidget {
                       ? Icons.star
                       : Icons.star_border,
                   color: mood == 'true'
-                      ? kBlue.withOpacity(0.3)
+                      ? kBlueGrey.withOpacity(0.3)
                       : kOrange.withOpacity(0.3),
                   size: 35,
                   shadows: shadow,
@@ -86,7 +86,7 @@ class StarsWidget extends StatelessWidget {
                       ? Icons.star
                       : Icons.star_border,
                   color: mood == 'true'
-                      ? kBlue.withOpacity(0.3)
+                      ? kBlueGrey.withOpacity(0.3)
                       : kOrange.withOpacity(0.3),
                   size: 30,
                   shadows: shadow,

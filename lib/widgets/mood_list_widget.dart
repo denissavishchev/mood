@@ -61,14 +61,7 @@ class MoodsListWidget extends StatelessWidget {
                           margin: const EdgeInsets.fromLTRB(8, 2, 8, 8),
                           decoration: BoxDecoration(
                               gradient: LinearGradient(
-                                colors: [
-                                  moods[index].mood == 'true'
-                                      ? kYellow.withOpacity(0.7)
-                                      : kNavy.withOpacity(0.7),
-                                  moods[index].mood == 'true'
-                                      ? kOrange.withOpacity(0.7)
-                                      : kBlue.withOpacity(0.7)
-                                ],
+                                colors: data.gradients(double.parse(moods[index].rating)),
                               ),
                               borderRadius: const BorderRadius.all(Radius.circular(4)),
                               boxShadow: const [
@@ -95,7 +88,7 @@ class MoodsListWidget extends StatelessWidget {
                                           spreadRadius: 2,
                                           blurRadius: 1,
                                           color: moods[index].mood == 'true'
-                                              ? kOrange.withOpacity(0.3) : kBlue.withOpacity(0.3)
+                                              ? kOrange.withOpacity(0.3) : kBlueGrey.withOpacity(0.3)
                                       )
                                     ],
                                   ),

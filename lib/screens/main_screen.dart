@@ -80,7 +80,7 @@ class MainScreen extends StatelessWidget {
                                 child: Icon(
                                   data.pageIcons[i],
                                   color: data.currentPageIndex == i
-                                      ? kOrange : kBlue,
+                                      ? kOrange : kBlueGrey,
                                 ),
                               ),
                             ),

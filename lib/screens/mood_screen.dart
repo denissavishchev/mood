@@ -101,17 +101,8 @@ class MoodScreen extends StatelessWidget {
                                                 data.barRatings.addAll({m.mood : double.parse(m.rating)});
                                               }
                                               return PieChartSectionData(
-                                                  color: moods[i].mood == 'true'
-                                                      ? kOrange : kBlue,
                                                   gradient: LinearGradient(
-                                                      colors: [
-                                                        moods[i].mood == 'true'
-                                                            ? kYellow.withOpacity(0.7)
-                                                            : kNavy.withOpacity(0.7),
-                                                        moods[i].mood == 'true'
-                                                            ? kOrange.withOpacity(0.7)
-                                                            : kBlue.withOpacity(0.7)
-                                                      ],
+                                                      colors: data.gradients(double.parse(moods[i].rating)),
                                                       begin: Alignment.bottomLeft,
                                                       end: Alignment.topRight
                                                   ),

@@ -4,7 +4,6 @@ import 'package:mood/constants.dart';
 import 'package:mood/providers/mood_provider.dart';
 import 'package:provider/provider.dart';
 import '../widgets/rating_bar_widget.dart';
-import '../widgets/switch_widget.dart';
 
 class AddMoodScreen extends StatelessWidget {
   const AddMoodScreen({super.key});
@@ -24,14 +23,7 @@ class AddMoodScreen extends StatelessWidget {
                   height: size.height,
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                      colors: [
-                        data.moodState
-                            ? kYellow.withOpacity(0.7)
-                            : kNavy.withOpacity(0.7),
-                        data.moodState
-                            ? kOrange.withOpacity(0.7)
-                            : kBlue.withOpacity(0.7)
-                      ]
+                      colors: data.gradients(data.stars)
                     )
                   ),
                   child: Padding(
@@ -48,15 +40,6 @@ class AddMoodScreen extends StatelessWidget {
                           ],
                         ),
                         const SizedBox(height: 12,),
-                        SwitchWidget(
-                            onTap: () => data.switchMood(),
-                            state: data.moodState,
-                            textOne: 'is good',
-                            textTwo: 'Mood',
-                            textThree: 'Mood',
-                            textFour: 'is bad',
-                        ),
-                        const SizedBox(height: 40,),
                         TextFormField(
                           controller: data.actionTextController,
                           cursorColor: kWhite,
@@ -86,7 +69,7 @@ class AddMoodScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 20,),
                         RatingBarWidget(
-                          state: data.moodState,
+                          state: true,
                           provider: 'mood',
                         ),
                         const SizedBox(height: 40,),
@@ -97,9 +80,7 @@ class AddMoodScreen extends StatelessWidget {
                             clipBehavior: Clip.hardEdge,
                             padding: const EdgeInsets.all(4),
                             decoration: BoxDecoration(
-                              color: data.moodState
-                                  ? kOrange.withOpacity(0.3)
-                                  : kBlue.withOpacity(0.3),
+                              color: kOrange.withOpacity(0.3),
                               borderRadius: const BorderRadius.all(Radius.circular(4)),
                             ),
                             child: data.fileName == ''

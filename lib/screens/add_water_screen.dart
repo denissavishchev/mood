@@ -23,7 +23,7 @@ class AddWaterScreen extends StatelessWidget {
                       gradient: LinearGradient(
                           colors: [
                             kNavy.withOpacity(0.7),
-                            kBlue.withOpacity(0.7)
+                            kBlueGrey.withOpacity(0.7)
                           ]
                       )
                   ),

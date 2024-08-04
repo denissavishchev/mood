@@ -22,7 +22,6 @@ class MoodProvider with ChangeNotifier {
   String fileName = '';
   String base64String = '';
 
-  bool moodState = true;
   double stars = 0.0;
   Map<String, double> barRatings = {};
   List<MoodModel> dates = [];
@@ -30,12 +29,31 @@ class MoodProvider with ChangeNotifier {
   int currentPageIndex = 0;
   List<List> mergedList = [];
 
+
   List<IconData> pageIcons = [
     Icons.mood,
     Icons.set_meal_outlined,
     Icons.animation,
     Icons.settings
   ];
+
+  List<Color> gradients(double stars){
+    switch(stars){
+      case 0.0:
+        return [kGrey, kBlack];
+      case 1.0:
+        return [kNavy, kBlueGrey];
+      case 2.0:
+        return [kOcean, kDarkBlue];
+      case 3.0:
+        return [kSalad, kGreen];
+      case 4.0:
+        return [kLightYellow, kLightGreen];
+      case 5.0:
+        return [kYellow, kOrange];
+    }
+    return [kBlack, kWhite];
+  }
 
   void calculateStatistic(List<MoodModel> moods){
     final trueResult = <String, List<double>>{};
@@ -119,11 +137,6 @@ class MoodProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void switchMood(){
-    moodState = !moodState;
-    notifyListeners();
-  }
-
   String doughnut(String rating){
     switch (rating) {
       case '1':
@@ -154,7 +167,7 @@ class MoodProvider with ChangeNotifier {
 
   insertMood(context) async{
     final mood = MoodModel(
-        mood: moodState.toString(),
+        mood: 'true',
         action: actionTextController.text,
         person: personTextController.text,
         place: placeTextController.text,
@@ -178,7 +191,6 @@ class MoodProvider with ChangeNotifier {
     personTextController.clear();
     placeTextController.clear();
     descriptionTextController.clear();
-    moodState = true;
     stars = 0.0;
     fileName = '';
     base64String = '';
@@ -207,7 +219,7 @@ class MoodProvider with ChangeNotifier {
                       const Spacer(),
                       IconButton(
                         onPressed: () => Navigator.of(context).pop(),
-                        icon: const Icon(Icons.clear), color: kBlue,),
+                        icon: const Icon(Icons.clear), color: kBlueGrey,),
                     ],
                   ),
                   Container(
@@ -215,7 +227,7 @@ class MoodProvider with ChangeNotifier {
                     width: size.width,
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                      color: kBlue.withOpacity(0.1),
+                      color: kBlueGrey.withOpacity(0.1),
                       borderRadius: const BorderRadius.horizontal(
                           right: Radius.circular(4)
                       ),
@@ -235,7 +247,7 @@ class MoodProvider with ChangeNotifier {
                     width: size.width,
                     margin: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                        color: kBlue.withOpacity(0.1),
+                        color: kBlueGrey.withOpacity(0.1),
                         borderRadius: const BorderRadius.all(Radius.circular(4))
                     ),
                     child: moods[index].photo == ''

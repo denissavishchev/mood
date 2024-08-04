@@ -29,7 +29,7 @@ class AddMealScreen extends StatelessWidget {
                                 : kNavy.withOpacity(0.7),
                             data.mealState
                                 ? kOrange.withOpacity(0.7)
-                                : kBlue.withOpacity(0.7)
+                                : kBlueGrey.withOpacity(0.7)
                           ]
                       )
                   ),
@@ -103,7 +103,7 @@ class AddMealScreen extends StatelessWidget {
                             clipBehavior: Clip.hardEdge,
                             padding: const EdgeInsets.all(4),
                             decoration: BoxDecoration(
-                              color: kBlue.withOpacity(0.3),
+                              color: kBlueGrey.withOpacity(0.3),
                               borderRadius: const BorderRadius.all(Radius.circular(4)),
                             ),
                             child: data.fileName == ''

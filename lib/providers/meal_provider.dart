@@ -213,7 +213,7 @@ class MealProvider with ChangeNotifier {
                       const Spacer(),
                       IconButton(
                         onPressed: () => Navigator.of(context).pop(),
-                        icon: const Icon(Icons.clear), color: kBlue,),
+                        icon: const Icon(Icons.clear), color: kBlueGrey,),
                     ],
                   ),
                   Container(
@@ -221,7 +221,7 @@ class MealProvider with ChangeNotifier {
                     width: size.width,
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                      color: kBlue.withOpacity(0.1),
+                      color: kBlueGrey.withOpacity(0.1),
                       borderRadius: const BorderRadius.horizontal(
                           right: Radius.circular(4)
                       ),
@@ -241,7 +241,7 @@ class MealProvider with ChangeNotifier {
                     width: size.width,
                     margin: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                        color: kBlue.withOpacity(0.1),
+                        color: kBlueGrey.withOpacity(0.1),
                         borderRadius: const BorderRadius.all(Radius.circular(4))
                     ),
                     child: meals[index].photo == ''
